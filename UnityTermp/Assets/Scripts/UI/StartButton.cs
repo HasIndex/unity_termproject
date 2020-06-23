@@ -3,10 +3,17 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StartButton : MonoBehaviour
 {
     // Start is called before the first frame update
+    [SerializeField] InputField inputField;
+
+    private void Awake()
+    {
+        //inputField = GetComponent<InputField>();
+    }
 
     void Start()
     {
@@ -21,7 +28,10 @@ public class StartButton : MonoBehaviour
     
     public void OnClick()
     {
-        SceneManager.LoadSceneAsync("1_Game_mmo", LoadSceneMode.Single);
+        //SceneManager.LoadSceneAsync("1_Game_mmo", LoadSceneMode.Single);
+
+        
+        Debug.Log(inputField.text);
 
         cs_packet_login login_packet;
         login_packet.header.size = (sbyte)Marshal.SizeOf<cs_packet_login>();
