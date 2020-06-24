@@ -16,33 +16,32 @@
 
 
 ##### 필요한 기술
-Network
-2D Animation
-ObjectPool
-UI System
-Degisn Pattern ( Singleton... etc )
-Coroutine.
-FSM.
-Handling JSON format
+-Network</br>
+-TCP/IP Socket Programming
+-2D Animation</br>
+-ObjectPool</br>
+-UI System</br>
+-Degisn Pattern ( Singleton... etc )</br>
+-Coroutine.</br>
+-FSM.</br>
+-Handling JSON format</br>
 
 
 
 # 개발에 사용한 외부 라이브러리들
 
 
-
 # 자체 제작한 에셋
-
-
+MMORPG
 
 # 수업에서 배우고 활용한 내용
-2D Animation
-ObjectPool
-UI System
-Degisn Pattern ( Singleton... etc )
-Coroutine.
-FSM.
-Handling JSON format
+2D Animation</br>
+ObjectPool</br>
+UI System</br>
+Degisn Pattern ( Singleton... etc )</br>
+Coroutine.</br>
+FSM.</br>
+Handling JSON format</br>
 
 
 

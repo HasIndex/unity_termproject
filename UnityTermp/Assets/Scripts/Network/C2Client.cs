@@ -2,29 +2,41 @@
 using System.Runtime.InteropServices;
 using UnityEngine;
 
+public struct LoadedPlayerData
+{
+    public int level;
+    public int hp;
+    public int exp;
+    public int y;
+    public int x;
+}
+
+
 public class C2Client : Singleton<C2Client>
 {
     public C2Session session;
-    public string nickname = "default";
     [SerializeField] PlayerMovement player;
+
+    public LoadedPlayerData PlayerData { get; set; }
+
+    public string Nickname { get; set; } = "default";
 
     public C2Client(PlayerMovement playerMovement)
     {
         session = C2Session.Instance;
         session.Client = this;
         player = playerMovement;
+
     }
 
     public void Start()
     {
+        DontDestroyOnLoad(this);
         if (session == null)
-        {
+        { 
             session = C2Session.Instance;
             session.Client = this;
         }
-
-
-        nickname = "default";
     }
 
     private void Update()
@@ -52,7 +64,6 @@ public class C2Client : Singleton<C2Client>
         //session.SendPacket<cs_packet_move>(movePayload);
     }
 
-
     public void SendPakcet<T>(T packet)
     {
         session.SendPacket<T>(packet);
@@ -68,5 +79,26 @@ public class C2Client : Singleton<C2Client>
         {
             player = value;
         }
+    }
+
+
+
+    /// <summary>
+    //
+    /// </summary>
+    public unsafe void Login()
+    {
+        C2Session c2Session = C2Session.Instance;
+
+        cs_packet_login loginPacket;
+        loginPacket.header.type = PacketType.C2S_LOGIN;
+        loginPacket.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_login));
+
+
+        byte[] unicodeByte = System.Text.Encoding.Unicode.GetBytes(C2Client.Instance.Nickname);
+        int nicknameLength = unicodeByte.Length > (int)Protocol.MAX_ID_LEN ? (int)Protocol.MAX_ID_LEN : unicodeByte.Length;
+        Marshal.Copy(unicodeByte, 0, (IntPtr)loginPacket.name, nicknameLength);
+
+        c2Session.SendPacket(loginPacket);
     }
 }

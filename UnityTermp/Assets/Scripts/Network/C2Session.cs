@@ -65,6 +65,7 @@ public class C2Session : Singleton<C2Session>
 
     void Awake()
     {
+        DontDestroyOnLoad(this);
         OnInit();
     }
 
@@ -98,8 +99,6 @@ public class C2Session : Singleton<C2Session>
             default:
                 break;
         }
-
-        //Debug.Log(state);
     }
 
     internal void SendPacket<T>(T packet)
@@ -109,13 +108,15 @@ public class C2Session : Singleton<C2Session>
 
     public void OnInit()
     {
-        socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        sendBuffer = new C2PayloadVector();
-        recvBuffer = new C2PayloadVector();
-        handler     = new InitialiPacketHandler();
+        socket      = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        sendBuffer  = new C2PayloadVector();
+        recvBuffer  = new C2PayloadVector();
+        handler     = new LoginPacketHandler();
+
         socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.DontLinger, true);
+        
         socket.Blocking = true;
-        socket.NoDelay = true;
+        socket.NoDelay  = true;
 
         this.state = SessionState.Initialized;
     }
@@ -232,20 +233,10 @@ public class C2Session : Singleton<C2Session>
 
         Debug.Log($"OnConnectComplete : { session.socket.Connected }");
 
-        if (session.socket.Connected == true)
+        if( session.socket.Connected == true)
         {
             session.state = SessionState.Connected;
-            session.handler = new InitialiPacketHandler();
-
-            cs_packet_login loginPacket;
-            loginPacket.header.type = PacketType.C2S_LOGIN;
-            loginPacket.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_login));
-
-            
-            byte[] utf8byte = System.Text.Encoding.UTF8.GetBytes(C2Client.Instance.nickname);
-            int a = utf8byte.Length > 50 ? 50 : utf8byte.Length;
-            Marshal.Copy(utf8byte, 0, (IntPtr)loginPacket.name, a);
-            session.SendPacket(loginPacket);
+            session.handler = new LoginPacketHandler();
         }
         else
         {
@@ -254,6 +245,7 @@ public class C2Session : Singleton<C2Session>
             else
                 session.state = SessionState.Initialized;
         }
+
     }
 
     public AsyncCallback OnDisconnectComplete()
@@ -267,4 +259,22 @@ public class C2Session : Singleton<C2Session>
         return async;
     }
 
+
+
+/// <summary>
+//
+/// </summary>
+    public unsafe void Login()
+    {
+        cs_packet_login loginPacket;
+        loginPacket.header.type = PacketType.C2S_LOGIN;
+        loginPacket.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_login));
+
+
+        byte[] unicodeByte = System.Text.Encoding.Unicode.GetBytes(C2Client.Instance.Nickname);
+        int nicknameLength = unicodeByte.Length > (int)Protocol.MAX_ID_LEN ? (int)Protocol.MAX_ID_LEN : unicodeByte.Length;
+        Marshal.Copy(unicodeByte, 0, (IntPtr)loginPacket.name, nicknameLength * 2);
+
+        this.SendPacket(loginPacket);
+    }
 }

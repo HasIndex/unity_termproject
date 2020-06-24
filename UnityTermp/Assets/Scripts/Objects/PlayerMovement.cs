@@ -122,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
         myRigidbody.MovePosition(transform.position + change);
     }
 
-    public void MoveCharacterUsingServerPostion(int y, int x)
+    public void MoveCharacterUsingServerPosition(int y, int x)
     {
         Vector3 vector = new Vector3();
         vector.x = x;

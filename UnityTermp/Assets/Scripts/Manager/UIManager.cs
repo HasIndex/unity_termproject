@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum UIState
 { 
-    Play, Chat
+    Login, Play, Chat
 }
 
 
@@ -12,10 +12,16 @@ public class UIManager : Singleton<UIManager>
 {
     [SerializeField] PlayerMovement player;
 
-    public UIState CurrentState { get; set;  } = UIState.Play;
+    public UIState CurrentState { get; set;  } = UIState.Login;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
 
+    public void Update()
+    {
 
-
+    }
 
 }

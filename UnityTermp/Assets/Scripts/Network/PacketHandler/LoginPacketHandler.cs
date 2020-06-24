@@ -1,19 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-
-public class InitialiPacketHandler : C2PacketHandler
+public class LoginPacketHandler : C2PacketHandler
 {
-    public InitialiPacketHandler() : base()
+    public LoginPacketHandler() : base()
     {
         handlers[(Int32)PacketType.S2C_LOGIN_OK] = OnLoginOk;
         handlers[(Int32)PacketType.S2C_LOGIN_FAIL] = OnLoginFail;
-
+        handlers[(Int32)PacketType.S2C_LEAVE] = OnLeave;
     }
 
     private void Chat(PacketHeader header, C2PayloadVector payload, C2Session session)
@@ -35,10 +32,20 @@ public class InitialiPacketHandler : C2PacketHandler
 
         C2Session.Instance.uniqueSessionId = (Int64)loginOkPayload.id;
 
-        C2Client.Instance.Player.MoveCharacterUsingServerPostion(loginOkPayload.y, loginOkPayload.x);
-        C2Client.Instance.Player.Level = loginOkPayload.level;
-        C2Client.Instance.Player.SetHP(loginOkPayload.hp, loginOkPayload.level * 2);
-        C2Client.Instance.Player.Exp = loginOkPayload.exp;
+        LoadedPlayerData playerData = new LoadedPlayerData();
+        playerData.y = loginOkPayload.y;
+        playerData.x = loginOkPayload.x;
+        playerData.level = loginOkPayload.level;
+        playerData.hp = loginOkPayload.hp;
+        playerData.exp = loginOkPayload.exp;
+
+        C2Client.Instance.PlayerData = playerData;
+        //C2Client.Instance.PlayerData.y = .MoveCharacterUsingServerPosition(loginOkPayload.y, loginOkPayload.x);
+        //C2Client.Instance.Player.Level = loginOkPayload.level;
+        //C2Client.Instance.Player.SetHP(loginOkPayload.hp, loginOkPayload.level * 2);
+        //C2Client.Instance.Player.Exp = loginOkPayload.exp;
+
+        SceneManager.LoadSceneAsync("1_Game_mmo", LoadSceneMode.Single);
     }
 
     void OnLoginFail(PacketHeader header, C2PayloadVector payload, C2Session session)
@@ -47,28 +54,19 @@ public class InitialiPacketHandler : C2PacketHandler
 
         payload.Read(out loginFailPayload);
 
+        UnityEngine.Debug.Log("Login failure!!");
         //C2Session.Instance.uniqueSessionId = (Int64)loginOkPayload.id;
     }
 
 
-
-    void Enter(PacketHeader header, C2PayloadVector payload, C2Session session)
-    {
-        sc_packet_enter enterPayload;
-        payload.Read(out enterPayload);
-
-
-        
-    }
-
-
     // 로그인 씬에서 나감. 사실상 연결 끊기.
-    void Leave(PacketHeader header, C2PayloadVector payload, C2Session session)
+    void OnLeave(PacketHeader header, C2PayloadVector payload, C2Session session)
     {
         sc_packet_leave leavePayload;
 
         payload.Read(out leavePayload);
     }
+
 
     // login server to my client
     void ResponseLogin(PacketHeader header, C2PayloadVector payload, C2Session session)
