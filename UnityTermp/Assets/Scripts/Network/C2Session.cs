@@ -177,8 +177,6 @@ public class C2Session : Singleton<C2Session>
         }
     }
 
-    
-
     public void RecvPayload()
     {
         if (true == socket.Poll(0, SelectMode.SelectRead)) // 데이터를 읽을 수 있다면 ...
@@ -261,20 +259,9 @@ public class C2Session : Singleton<C2Session>
 
 
 
-/// <summary>
-//
-/// </summary>
-    public unsafe void Login()
+    public void SetHandler(C2PacketHandler packetHandler)
     {
-        cs_packet_login loginPacket;
-        loginPacket.header.type = PacketType.C2S_LOGIN;
-        loginPacket.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_login));
-
-
-        byte[] unicodeByte = System.Text.Encoding.Unicode.GetBytes(C2Client.Instance.Nickname);
-        int nicknameLength = unicodeByte.Length > (int)Protocol.MAX_ID_LEN ? (int)Protocol.MAX_ID_LEN : unicodeByte.Length;
-        Marshal.Copy(unicodeByte, 0, (IntPtr)loginPacket.name, nicknameLength * 2);
-
-        this.SendPacket(loginPacket);
+        this.handler = packetHandler;
     }
+
 }

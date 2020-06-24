@@ -12,6 +12,7 @@ public class InGamePacketHandler : C2PacketHandler
         handlers[(Int32)PacketType.S2C_LEAVE] = OnLeave;
         handlers[(Int32)PacketType.S2C_CHAT] = OnChat;
         handlers[(Int32)PacketType.S2C_STAT_CHANGE] = OnStatChange;
+
     }
 
     private void OnChat(PacketHeader header, C2PayloadVector payload, C2Session session)

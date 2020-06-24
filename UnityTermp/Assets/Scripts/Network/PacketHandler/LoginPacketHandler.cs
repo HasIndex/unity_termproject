@@ -45,6 +45,11 @@ public class LoginPacketHandler : C2PacketHandler
         //C2Client.Instance.Player.SetHP(loginOkPayload.hp, loginOkPayload.level * 2);
         //C2Client.Instance.Player.Exp = loginOkPayload.exp;
 
+        UIManager.Instance.CurrentState = UIState.Play;
+
+        // 핸들러 변경후 
+        C2Session.Instance.SetHandler(new InGamePacketHandler());
+
         SceneManager.LoadSceneAsync("1_Game_mmo", LoadSceneMode.Single);
     }
 
