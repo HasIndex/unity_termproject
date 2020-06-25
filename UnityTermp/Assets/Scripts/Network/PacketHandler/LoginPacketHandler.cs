@@ -13,15 +13,6 @@ public class LoginPacketHandler : C2PacketHandler
         handlers[(Int32)PacketType.S2C_LEAVE] = OnLeave;
     }
 
-    private void Chat(PacketHeader header, C2PayloadVector payload, C2Session session)
-    {
-        throw new NotImplementedException();
-
-        sc_packet_chat chatPayload;
-
-        payload.Read(out chatPayload);
-    }
-
 
     // 로그인 확인.
     void OnLoginOk(PacketHeader header, C2PayloadVector payload, C2Session session)

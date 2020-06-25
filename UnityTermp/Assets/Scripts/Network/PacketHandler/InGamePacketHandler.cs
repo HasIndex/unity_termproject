@@ -2,6 +2,8 @@
 
 
 using System;
+using System.Runtime.InteropServices;
+using UnityEditor.U2D.Animation;
 
 public class InGamePacketHandler : C2PacketHandler
 {
@@ -15,13 +17,19 @@ public class InGamePacketHandler : C2PacketHandler
 
     }
 
-    private void OnChat(PacketHeader header, C2PayloadVector payload, C2Session session)
+    unsafe void OnChat(PacketHeader header, C2PayloadVector payload, C2Session session)
     {
         throw new NotImplementedException();
 
         sc_packet_chat chatPayload;
 
         payload.Read(out chatPayload);
+
+        char* chatPtr = chatPayload.chat;
+        
+        var chatString = new String(chatPtr);
+
+        ChatManager.Instance.AddChat(chatString, MessageType.User);
     }
 
 
