@@ -10,7 +10,7 @@ public enum PlayerState
     Walk, Attack, Interact, PathFinding
 }
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : Singleton<PlayerMovement>
 {
     public PlayerState      currentState;
     public float            speed;
@@ -29,8 +29,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Stat       mp;
     [SerializeField] private Portrait   portrait;
 
-    void Start()
+    void Awake()
     {
+        DontDestroyOnLoad(this);
+
         hp.Initialize(200, 200);
         mp.Initialize(200, 200);
         portrait.SetLevel(5); 
@@ -41,6 +43,9 @@ public class PlayerMovement : MonoBehaviour
 
         animator.SetFloat("moveX", 0);
         animator.SetFloat("moveY", -1);
+
+        // 처음에 안비추고 게임씬에서 비춤.
+        enabled = false;
     }
 
     // Update is called once per frame
