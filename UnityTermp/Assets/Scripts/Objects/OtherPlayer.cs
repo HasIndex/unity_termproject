@@ -6,7 +6,6 @@ using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-
 public class OtherPlayer : MonoBehaviour
 {
     public PlayerState currentState;
@@ -89,7 +88,9 @@ public class OtherPlayer : MonoBehaviour
         Vector3 vector = new Vector3();
         vector.x = x;
         vector.y = y;
+
         Debug.Log($"move server postion x {x}, y {y}");
+
         myRigidbody.MovePosition(vector);
     }
 }

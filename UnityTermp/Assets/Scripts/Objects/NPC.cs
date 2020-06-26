@@ -5,7 +5,6 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     // Start is called before the first frame update
-
     void Start()
     {
         
@@ -17,6 +16,15 @@ public class NPC : MonoBehaviour
         
     }
 
+    public void MoveCharacterUsingServerPostion(int y, int x)
+    {
+        Vector3 vector = new Vector3();
+        vector.x = x;
+        vector.y = y;
 
+        Debug.Log($"move server postion x {x}, y {y}");
+
+        //myRigidbody.MovePosition(vector);
+    }
 
 }
