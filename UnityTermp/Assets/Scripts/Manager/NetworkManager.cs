@@ -18,7 +18,7 @@ public class NetworkManager : Singleton<NetworkManager>
     internal C2Client                   client;
     public static Int64                 uniqueSessionID = -1;
 
-    [SerializeField] PlayerMovement player;
+    [SerializeField] MainPlayer player;
     
     void Awake()
     {
@@ -39,6 +39,16 @@ public class NetworkManager : Singleton<NetworkManager>
         
     }
 
+    public MainPlayer Player
+    {
+        get
+        {
+            return player;
+        }
+        set
+        {
+            player = value;
+        }
+    }
 
 }
- 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public struct LoadedPlayerData
 {
@@ -15,13 +16,13 @@ public struct LoadedPlayerData
 public class C2Client : Singleton<C2Client>
 {
     public C2Session session;
-    [SerializeField] PlayerMovement player;
+    [SerializeField] MainPlayer player;
 
     public LoadedPlayerData PlayerData { get; set; }
 
     public string Nickname { get; set; } = "default";
 
-    public C2Client(PlayerMovement playerMovement)
+    public C2Client(MainPlayer playerMovement)
     {
         session = C2Session.Instance;
         session.Client = this;
@@ -43,7 +44,7 @@ public class C2Client : Singleton<C2Client>
     {
     }
 
-    public void SendMovePakcet(PlayerMovement player)
+    public void SendMovePakcet(MainPlayer player)
     {
         cs_packet_move movePayload;//
         movePayload.header.size = (sbyte)Marshal.SizeOf<PacketHeader>();
@@ -54,7 +55,7 @@ public class C2Client : Singleton<C2Client>
         session.SendPacket<cs_packet_move>(movePayload);
     }
 
-    public void SendAttackPakcet(PlayerMovement player)
+    public void SendAttackPakcet(MainPlayer player)
     {
         //cs_packet_move movePayload;//
         //movePayload.header.size = (sbyte)Marshal.SizeOf<PacketHeader>();
@@ -69,7 +70,7 @@ public class C2Client : Singleton<C2Client>
         session.SendPacket<T>(packet);
     }
 
-    public PlayerMovement Player
+    public MainPlayer Player
     {
         get
         {
@@ -81,7 +82,22 @@ public class C2Client : Singleton<C2Client>
         }
     }
 
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "1_Game_mmo")
+        {
+        }
+    }
 
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     /// <summary>
     //

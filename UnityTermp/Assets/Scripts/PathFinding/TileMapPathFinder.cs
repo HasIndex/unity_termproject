@@ -65,7 +65,7 @@ public class TileMapPathFinder : MonoBehaviour
     private BoxCollider2D collider2d;
     private Vector2 base_position;
 
-    public PlayerMovement playerMovement;
+    public MainPlayer playerMovement;
     public GameObject player;
     public Vector2 tile_size;
     public Vector2Int tile_count;

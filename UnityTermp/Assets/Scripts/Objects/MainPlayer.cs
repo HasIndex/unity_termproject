@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
@@ -10,7 +11,7 @@ public enum PlayerState
     Walk, Attack, Interact, PathFinding
 }
 
-public class PlayerMovement : Singleton<PlayerMovement>
+public class MainPlayer : Singleton<MainPlayer>
 {
     public PlayerState      currentState;
     public float            speed;
@@ -33,9 +34,9 @@ public class PlayerMovement : Singleton<PlayerMovement>
     {
         DontDestroyOnLoad(this);
 
-        hp.Initialize(200, 200);
-        mp.Initialize(200, 200);
-        portrait.SetLevel(5); 
+        //hp.Initialize(200, 200);
+        //mp.Initialize(200, 200);
+        //portrait.SetLevel(5); 
 
         currentState    = PlayerState.Walk;
         animator        = GetComponent<Animator>();
@@ -45,7 +46,7 @@ public class PlayerMovement : Singleton<PlayerMovement>
         animator.SetFloat("moveY", -1);
 
         // 처음에 안비추고 게임씬에서 비춤.
-        enabled = false;
+        //enabled = false;
     }
 
     // Update is called once per frame
@@ -86,6 +87,25 @@ public class PlayerMovement : Singleton<PlayerMovement>
         }
     }
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        //Debug.Log("OnSceneLoaded: " + scene.name);
+        //Debug.Log(mode);
+        if( scene.name == "1_Game_mmo")
+        {
+            C2Client.Instance.Player = this;
+            NetworkManager.Instance.Player = this;
+        }
+    }
 
 
     private IEnumerator AttackCo()

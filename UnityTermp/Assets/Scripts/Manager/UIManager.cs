@@ -10,7 +10,7 @@ public enum UIState
 
 public class UIManager : Singleton<UIManager>
 {
-    [SerializeField] PlayerMovement player;
+    [SerializeField] MainPlayer player;
 
     public UIState CurrentState { get; set;  } = UIState.Login;
 
