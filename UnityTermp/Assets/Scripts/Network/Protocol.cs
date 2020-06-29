@@ -59,7 +59,7 @@ public unsafe struct cs_packet_move
 };
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public unsafe struct cs_packet_atttack
+public unsafe struct cs_packet_attack
 {
 	public PacketHeader header;
 };

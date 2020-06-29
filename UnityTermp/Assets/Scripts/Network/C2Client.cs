@@ -17,7 +17,7 @@ public class C2Client : Singleton<C2Client>
 {
     public C2Session session;
     [SerializeField] MainPlayer player;
-
+    public Int32 serverID { get; set; } = -1;
     public LoadedPlayerData PlayerData { get; set; }
 
     public string Nickname { get; set; } = "default";
@@ -116,5 +116,61 @@ public class C2Client : Singleton<C2Client>
         Marshal.Copy(unicodeByte, 0, (IntPtr)loginPacket.name, nicknameLength);
 
         c2Session.SendPacket(loginPacket);
+    }
+
+    public unsafe void Move(sbyte direction)
+    {
+        C2Session c2Session = C2Session.Instance;
+
+        cs_packet_move movePayload;
+        movePayload.header.type = PacketType.C2S_MOVE;
+        movePayload.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_move));
+        movePayload.direction = direction;
+        movePayload.move_time = 0;
+
+        c2Session.SendPacket(movePayload);
+    }
+
+
+    public unsafe void Attack()
+    {
+        C2Session c2Session = C2Session.Instance;
+
+        cs_packet_attack attackPayload;
+        attackPayload.header.type = PacketType.C2S_ATTACK;
+        attackPayload.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_attack));
+
+        c2Session.SendPacket(attackPayload);
+    }
+
+
+    public unsafe void Chat(string msg)
+    {
+        C2Session c2Session = C2Session.Instance;
+
+        cs_packet_chat chatPayload;
+        chatPayload.header.type = PacketType.C2S_CHAT;
+        chatPayload.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_chat));
+
+
+        byte[] chatBytes = System.Text.Encoding.Unicode.GetBytes(msg);
+        int chatLength = chatBytes.Length > (int)Protocol.MAX_CHAT_LEN ? (int)Protocol.MAX_CHAT_LEN : chatBytes.Length;
+        Marshal.Copy(chatBytes, 0, (IntPtr)chatPayload.chat, chatLength);
+
+        chatPayload.id = C2Client.Instance.serverID;
+
+        c2Session.SendPacket(chatPayload);
+    }
+
+
+    public unsafe void Logout()
+    {
+        C2Session c2Session = C2Session.Instance;
+
+        cs_packet_logout logoutPayload;
+        logoutPayload.header.type = PacketType.C2S_LOGOUT;
+        logoutPayload.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_logout));
+
+        c2Session.SendPacket(logoutPayload);
     }
 }
