@@ -44,16 +44,16 @@ public class C2Client : Singleton<C2Client>
     {
     }
 
-    public void SendMovePakcet(MainPlayer player)
-    {
-        cs_packet_move movePayload;//
-        movePayload.header.size = (sbyte)Marshal.SizeOf<PacketHeader>();
-        movePayload.header.type = PacketType.C2S_MOVE;
-        movePayload.move_time = 0;
-        movePayload.direction = player.Direction ;// player.direction;
+    //public void SendMovePakcet(MainPlayer player)
+    //{
+    //    cs_packet_move movePayload;//
+    //    movePayload.header.size = (sbyte)Marshal.SizeOf<PacketHeader>();
+    //    movePayload.header.type = PacketType.C2S_MOVE;
+    //    movePayload.move_time = 0;
+    //    movePayload.direction = player.Direction ;// player.direction;
 
-        session.SendPacket<cs_packet_move>(movePayload);
-    }
+    //    session.SendPacket<cs_packet_move>(movePayload);
+    //}
 
     public void SendAttackPakcet(MainPlayer player)
     {
@@ -102,14 +102,13 @@ public class C2Client : Singleton<C2Client>
     /// <summary>
     //
     /// </summary>
-    public unsafe void Login()
+    public unsafe void SendLoginPacket()
     {
         C2Session c2Session = C2Session.Instance;
 
         cs_packet_login loginPacket;
         loginPacket.header.type = PacketType.C2S_LOGIN;
         loginPacket.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_login));
-
 
         byte[] unicodeByte = System.Text.Encoding.Unicode.GetBytes(C2Client.Instance.Nickname);
         int nicknameLength = unicodeByte.Length > (int)Protocol.MAX_ID_LEN ? (int)Protocol.MAX_ID_LEN : unicodeByte.Length;
@@ -118,7 +117,7 @@ public class C2Client : Singleton<C2Client>
         c2Session.SendPacket(loginPacket);
     }
 
-    public unsafe void Move(sbyte direction)
+    public unsafe void SendMovePacket(sbyte direction)
     {
         C2Session c2Session = C2Session.Instance;
 
@@ -132,7 +131,7 @@ public class C2Client : Singleton<C2Client>
     }
 
 
-    public unsafe void Attack()
+    public unsafe void SendAttackPacket()
     {
         C2Session c2Session = C2Session.Instance;
 
@@ -144,7 +143,7 @@ public class C2Client : Singleton<C2Client>
     }
 
 
-    public unsafe void Chat(string msg)
+    public unsafe void SendChatPacket(string msg)
     {
         C2Session c2Session = C2Session.Instance;
 
@@ -163,7 +162,7 @@ public class C2Client : Singleton<C2Client>
     }
 
 
-    public unsafe void Logout()
+    public unsafe void SendLogoutPacket()
     {
         C2Session c2Session = C2Session.Instance;
 

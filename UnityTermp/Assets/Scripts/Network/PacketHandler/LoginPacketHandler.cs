@@ -21,7 +21,9 @@ public class LoginPacketHandler : C2PacketHandler
 
         payload.Read(out loginOkPayload);
 
+        // user id 
         C2Session.Instance.uniqueSessionId = (Int64)loginOkPayload.id;
+        C2Client.Instance.serverID = loginOkPayload.id;
 
         LoadedPlayerData playerData = new LoadedPlayerData();
         playerData.y = loginOkPayload.y;

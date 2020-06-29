@@ -32,7 +32,7 @@ public class LoginButton : MonoBehaviour
 
         C2Client.Instance.Nickname = inputField.text;
 
-        C2Client.Instance.Login();
+        C2Client.Instance.SendLoginPacket();
         // login_packet.name; 
         //Debug.Log();
         // C2Session.Instance.SendPacket<cs_packet_enter>(enter_packet);

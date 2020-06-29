@@ -67,13 +67,12 @@ public class InGamePacketHandler : C2PacketHandler
 
     private void OnStatChange(PacketHeader header, C2PayloadVector payload, C2Session session)
     {
-        throw new NotImplementedException();
+        sc_packet_stat_change statChangePayload;
 
-        sc_packet_chat chatPayload;
-
-        payload.Read(out chatPayload);
+        payload.Read(out statChangePayload);
 
         // 스탯 업데이트 해줌.
+        MainPlayer.Instance.SetStat(statChangePayload.level, statChangePayload.hp, statChangePayload.exp);
     }
 
     //// 회원가입

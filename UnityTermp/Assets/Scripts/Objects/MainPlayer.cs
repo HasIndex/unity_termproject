@@ -27,16 +27,16 @@ public class MainPlayer : Singleton<MainPlayer>
 
 
     [SerializeField] private Stat       hp;
-    [SerializeField] private Stat       mp;
+    [SerializeField] private Stat       exp;
     [SerializeField] private Portrait   portrait;
 
     void Awake()
     {
         DontDestroyOnLoad(this);
 
-        //hp.Initialize(200, 200);
-        //mp.Initialize(200, 200);
-        //portrait.SetLevel(5); 
+        hp.Initialize(200, 200);
+        exp.Initialize(200, 200);
+        portrait.SetLevel(1);
 
         currentState    = PlayerState.Walk;
         animator        = GetComponent<Animator>();
@@ -59,20 +59,24 @@ public class MainPlayer : Singleton<MainPlayer>
         if(Input.GetKeyDown(KeyCode.UpArrow) == true)
         {
             change.y = +1.0f;
-            direction = 0;
-            //client.SendMovePakcet(this);
+            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Up);
         }
         else if(Input.GetKeyDown(KeyCode.DownArrow) == true)
         {
             change.y = -1.0f;
+            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Down);
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow) == true)
         {
             change.x = -1.0f;
+
+            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Left);
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow) == true)
         {
             change.x = +1.0f;
+
+            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Right);
         }
 
 
@@ -104,6 +108,14 @@ public class MainPlayer : Singleton<MainPlayer>
         {
             C2Client.Instance.Player = this;
             NetworkManager.Instance.Player = this;
+
+            // stat
+            hp.Initialize(C2Client.Instance.PlayerData.hp, 200);
+            //exp.Initialize(C2Client.Instance.PlayerData.exp, 200 * C2Client.Instance.PlayerData.level);
+            portrait.SetLevel(C2Client.Instance.PlayerData.level);
+
+            // 좌표
+            MoveCharacterUsingServerPosition(C2Client.Instance.PlayerData.y, C2Client.Instance.PlayerData.x);
         }
     }
 
@@ -165,4 +177,13 @@ public class MainPlayer : Singleton<MainPlayer>
     {
         //portrait.
     }
+
+
+    public void SetStat(int level, int hp, int exp)
+    {
+        portrait.SetLevel(level);
+        this.hp.CurrentValue = hp;
+        this.exp.CurrentValue = exp;
+    }
+
 }

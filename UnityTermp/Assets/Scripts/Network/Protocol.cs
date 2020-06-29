@@ -32,6 +32,11 @@ public enum Protocol
 	MAX_STR_LEN = 255
 }
 
+public enum ServerDirection : sbyte
+{
+	Up, Down, Left, Right
+}
+
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct PacketHeader
@@ -149,7 +154,7 @@ struct sc_packet_stat_change
 {
 	PacketHeader header;
 
-	short	hp;
-	short	level;
-	int		exp;
+	public short	hp;
+	public short	level;
+	public int		exp;
 };
