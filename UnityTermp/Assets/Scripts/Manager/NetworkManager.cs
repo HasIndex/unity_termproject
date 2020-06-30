@@ -60,7 +60,6 @@ public class NetworkManager : Singleton<NetworkManager>
                 gobj = ObjectPooler.Instance.Spawn("OtherPlayer", new Vector3(x, y));
                 break;
 
-
             case 2:
                 gobj = ObjectPooler.Instance.Spawn("Orge", new Vector3(x, y));
                 break;
@@ -78,20 +77,32 @@ public class NetworkManager : Singleton<NetworkManager>
 
         if(null != gobj)
         {
-            otherMap.Add(id, new GameObject());
+            try
+            {
+                otherMap.Add(id, gobj);
+            }
+            catch(ArgumentException)
+            {
+                //GameObject obj;
+                //otherMap.TryGetValue(id, out obj);
+                ObjectPooler.Instance.Recycle(gobj.tag, gobj);
+            }
         }
     }
 
     public void Remove(long id)
     {
-        //GameObject go;
-        //otherMap.TryGetValue(id , out go);
-        //if(go == null)
-        //{
-        //    Debug.Log("없는 id");
-        //}
+        GameObject go;
 
-        //ObjectPooler.Instance.Recycle("", go);
+        
+        otherMap.TryGetValue(id, out go);
+        if (go == null)
+        {
+            Debug.Log($"없는 id : {id}");
+            return;
+        }
+
+        ObjectPooler.Instance.Recycle(go.tag, go);
     }
 
 }

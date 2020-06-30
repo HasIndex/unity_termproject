@@ -67,7 +67,37 @@ public class ObjectPooler : Singleton<ObjectPooler>
         go.SetActive(false);
         go.transform.position = Vector3.zero;
 
-        poolDict[gameObjectName].Add(go);
+        
+        try
+        {
+            switch (gameObjectName)
+            {
+                case "Ogre":
+                    poolDict["Ogre"].Add(go);
+                    break;
+
+                case "Player":
+                    poolDict["OtherPlayer"].Add(go);
+                    break;
+
+                case "NPC":
+                    poolDict["NPC2"].Add(go);
+                    break;
+
+                case "Log":
+                    poolDict["Log"].Add(go);
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+        catch(KeyNotFoundException)
+        {
+            Debug.Log($" KeyNotFoundExeception {gameObjectName}");
+        }
+
     }
 
     //GameObject tt;

@@ -410,10 +410,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 0}
+  - {fileID: 1278596210755248720, guid: 2ff5474253f034506944421ac26d0dd8, type: 3}
+  - {fileID: 8851452255691817727, guid: b0c7f09332a3e534db8643433ea2b4fc, type: 3}
+  - {fileID: 1408362243123193054, guid: 84af6b825e1f07f4482c9d313ca9bc32, type: 3}
   - {fileID: 729258935404077614, guid: 2ffab7cf63be37646afcd32c61c5ab94, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &292092429
 Transform:
   m_ObjectHideFlags: 0

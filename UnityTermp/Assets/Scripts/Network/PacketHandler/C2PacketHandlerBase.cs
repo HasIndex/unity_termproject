@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
+using UnityEngine;
 
 public delegate void PacketHandlerFunc(PacketHeader header, C2PayloadVector payload, C2Session session);
 
@@ -26,10 +27,13 @@ public class C2PacketHandler
     {
         get 
         {
-            if(PacketType.PT_NONE < type && type < PacketType.PT_MAX)
+            if (PacketType.PT_NONE < type && type < PacketType.PT_MAX)
                 return C2PacketHandler.handlers[(int)type];
             else
+            {
+                UnityEngine.Debug.Log($" IndexOutOfRangeException  Type : {type} ({(Int64)type}) ");
                 throw new IndexOutOfRangeException();
+            }
         }
     }
 }
