@@ -59,12 +59,12 @@ public class MainPlayer : Singleton<MainPlayer>
         if(Input.GetKeyDown(KeyCode.UpArrow) == true)
         {
             change.y = +1.0f;
-            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Down);
+            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Up);
         }
         else if(Input.GetKeyDown(KeyCode.DownArrow) == true)
         {
             change.y = -1.0f;
-            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Up);
+            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Down);
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow) == true)
         {
@@ -163,7 +163,7 @@ public class MainPlayer : Singleton<MainPlayer>
     {
         Vector3 vector = new Vector3();
         vector.x = x;
-        vector.y = y;
+        vector.y = -y;
         Debug.Log($"move server postion x {x}, y {y}");
         myRigidbody.MovePosition(vector);
     }

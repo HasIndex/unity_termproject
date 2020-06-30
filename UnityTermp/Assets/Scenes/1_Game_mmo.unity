@@ -1079,8 +1079,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 921681912}
   smoothing: 0.05
-  minPosition: {x: 0, y: 0}
-  maxPosition: {x: 800, y: 800}
+  minPosition: {x: 0, y: -800}
+  maxPosition: {x: 800, y: 0}
 --- !u!1 &556597726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1658,7 +1658,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1095185762}
   m_HandleRect: {fileID: 1095185761}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2189,7 +2189,7 @@ PrefabInstance:
     - target: {fileID: 6666078593519440528, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: -799
       objectReference: {fileID: 0}
     - target: {fileID: 6666078593519440528, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
         type: 3}
@@ -2288,7 +2288,7 @@ PrefabInstance:
     - target: {fileID: 4279547093788803908, guid: aed60d39a017b624fb3c12fa695f0234,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 800.34
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4279547093788803908, guid: aed60d39a017b624fb3c12fa695f0234,
         type: 3}

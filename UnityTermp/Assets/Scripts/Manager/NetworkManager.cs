@@ -53,19 +53,19 @@ public class NetworkManager : Singleton<NetworkManager>
         switch (objectType)
         {
             case 0:
-                gobj = ObjectPooler.Instance.Spawn("NPC2", new Vector3(x, y));
+                gobj = ObjectPooler.Instance.Spawn("NPC2", new Vector3(x, -y));
                 break;
 
             case 1:
-                gobj = ObjectPooler.Instance.Spawn("OtherPlayer", new Vector3(x, y));
+                gobj = ObjectPooler.Instance.Spawn("OtherPlayer", new Vector3(x, -y));
                 break;
 
             case 2:
-                gobj = ObjectPooler.Instance.Spawn("Orge", new Vector3(x, y));
+                gobj = ObjectPooler.Instance.Spawn("Orge", new Vector3(x, -y));
                 break;
 
             case 3:
-                gobj = ObjectPooler.Instance.Spawn("log", new Vector3(x, y));
+                gobj = ObjectPooler.Instance.Spawn("log", new Vector3(x, -y));
                 break;
 
             default:
