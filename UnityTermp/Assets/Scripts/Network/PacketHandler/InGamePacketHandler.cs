@@ -57,7 +57,7 @@ public class InGamePacketHandler : C2PacketHandler
             NetMonoBehaviour go = NetworkManager.Instance.TryGet(movePayload.id);
             if (go != null)
             {
-                go.MoveToPositionUsingServerPostion(movePayload.x, -movePayload.y);
+                go.MoveToPositionUsingServerPostion(-movePayload.y, movePayload.x);
             }
             else
             {
