@@ -51,7 +51,7 @@ public unsafe struct cs_packet_login
 {
     public PacketHeader header;
 
-    public fixed char name[(int)Protocol.MAX_ID_LEN];
+    public fixed UInt16 name[(int)Protocol.MAX_ID_LEN];
 };
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -76,7 +76,7 @@ public unsafe struct cs_packet_chat
 	public PacketHeader header;
 
 	public	int			id;
-	public fixed char	chat[(int)Protocol.MAX_CHAT_LEN];
+	public fixed UInt16 chat[(int)Protocol.MAX_CHAT_LEN];
 };
 
 
@@ -130,7 +130,7 @@ public unsafe struct sc_packet_enter //
 	public byte o_type;
 	public short x, y;
 
-	public fixed char name[(int)Protocol.MAX_ID_LEN];
+	public fixed UInt16 name[(int)Protocol.MAX_ID_LEN];
 };
 
 
@@ -149,7 +149,7 @@ public unsafe struct sc_packet_chat // 166
 	public PacketHeader header;
 
 	public int id;
-	public fixed char chat[(int)Protocol.MAX_CHAT_LEN];
+	public fixed short chat[(int)Protocol.MAX_CHAT_LEN];
 };
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]

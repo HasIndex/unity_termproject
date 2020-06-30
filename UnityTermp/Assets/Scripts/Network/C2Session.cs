@@ -106,6 +106,7 @@ public class C2Session : Singleton<C2Session>
         sendBuffer.Wirte<T>(packet);
     }
 
+
     public void OnInit()
     {
         socket      = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);

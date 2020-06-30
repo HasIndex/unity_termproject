@@ -24,7 +24,6 @@ public class C2PayloadVector
     {
         Int32 size = Marshal.SizeOf<T>();
         
-        //IntPtr ptr = Marshal.AllocHGlobal(size);
         Marshal.StructureToPtr(src, nativeBuffer, false);
 
         Marshal.Copy(nativeBuffer, buffer, writeHead, size); // ptr to buffer

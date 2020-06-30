@@ -104,6 +104,8 @@ public class C2Client : Singleton<C2Client>
         loginPacket.header.size = (byte)Marshal.SizeOf(typeof(cs_packet_login));
 
         byte[] unicodeByte = System.Text.Encoding.Unicode.GetBytes(C2Client.Instance.Nickname);
+        //byte[] unicodeByte = System.Text.Encoding.Unicode.GetBytes(C2Client.Instance.Nickname);
+
         int nicknameLength = unicodeByte.Length > (int)Protocol.MAX_ID_LEN ? (int)Protocol.MAX_ID_LEN : unicodeByte.Length;
         Marshal.Copy(unicodeByte, 0, (IntPtr)loginPacket.name, nicknameLength);
 

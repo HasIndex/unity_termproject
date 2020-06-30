@@ -25,15 +25,12 @@ public class InGamePacketHandler : C2PacketHandler
 
         payload.Read(out chatPayload);
 
-        char* chatPtr = chatPayload.chat;
+        short* chatPtr = chatPayload.chat;
         
-        var chatString = new String(chatPtr);
-
-        UnityEngine.Debug.Log($"chat before {chatString}");
+        var chatString = new String((char*)chatPtr);
 
         ChatManager.Instance.AddChat(chatString, MessageType.User);
 
-        UnityEngine.Debug.Log($"chat complete {chatString}");
     }
 
     // 이동
