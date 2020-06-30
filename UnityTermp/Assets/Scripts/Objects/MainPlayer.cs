@@ -20,7 +20,7 @@ public class MainPlayer : Singleton<MainPlayer>
     private byte            direction;
     private Animator        animator;
     private C2Client        client;
-
+    
     public int Level { get; set; } = 1;
     public int Exp { get; set; } = 0;
     public sbyte Direction { get; set; } = 0;
@@ -78,6 +78,12 @@ public class MainPlayer : Singleton<MainPlayer>
 
             C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Right);
         }
+        
+        if (Input.GetKeyDown(KeyCode.Space) == true)
+        {
+            C2Client.Instance.SendAttackPacket();
+        }
+
 
 
         // path finding 우선.
@@ -164,7 +170,7 @@ public class MainPlayer : Singleton<MainPlayer>
     {
         Vector3 vector = new Vector3();
         vector.x = x;
-        vector.y = -y;
+        vector.y = y;
         //Debug.Log($"move server postion x {x}, y {y}");
         myRigidbody.position = vector;
     }
@@ -183,6 +189,13 @@ public class MainPlayer : Singleton<MainPlayer>
     public void SetStat(int level, int hp, int exp)
     {
         portrait.SetLevel(level);
+
+        int prevLevel = this.Level;
+        if(prevLevel != level)
+        {
+            this.exp.MaxValue = level * 200;
+        }
+
         this.hp.CurrentValue = hp;
         this.exp.CurrentValue = exp;
     }

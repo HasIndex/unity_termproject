@@ -50,7 +50,7 @@ public class InGamePacketHandler : C2PacketHandler
 
         if (C2Client.Instance.serverID == movePayload.id)
         {
-            C2Client.Instance.Player.MoveCharacterUsingServerPosition(movePayload.y, movePayload.x);
+            C2Client.Instance.Player.MoveCharacterUsingServerPosition(-movePayload.y, movePayload.x);
         }
         else
         {
@@ -72,9 +72,16 @@ public class InGamePacketHandler : C2PacketHandler
 
         payload.Read(out enterPayload);
 
-        UnityEngine.Debug.Log($"{enterPayload.id} enter payload : o type: {enterPayload.o_type} , y: {enterPayload.y}, x: {enterPayload.x}");
+        //UnityEngine.Debug.Log($"{enterPayload.id} enter payload : o type: {enterPayload.o_type} , y: {enterPayload.y}, x: {enterPayload.x}");
 
-        NetworkManager.Instance.Add(enterPayload.id, enterPayload.o_type, enterPayload.y, enterPayload.x); // 제거 함.
+        if (C2Client.Instance.serverID == enterPayload.id)
+        {
+            C2Client.Instance.Player.MoveCharacterUsingServerPosition(-enterPayload.y, enterPayload.x);
+        }
+        else
+        {
+            NetworkManager.Instance.Add(enterPayload.id, enterPayload.o_type, enterPayload.y, enterPayload.x); // 제거 함.
+        }
     }
 
     // 로그인 씬에서 나감. 사실상 연결 끊기.

@@ -56,15 +56,6 @@ public class C2Client : Singleton<C2Client>
     //    session.SendPacket<cs_packet_move>(movePayload);
     //}
 
-    public void SendAttackPakcet(MainPlayer player)
-    {
-        //cs_packet_move movePayload;//
-        //movePayload.header.size = (sbyte)Marshal.SizeOf<PacketHeader>();
-        //movePayload.header.type = PacketType.C2S_MOVE;
-        //movePayload.move_time = 0;
-        //movePayload.direction = player.Direction;// player.direction;
-        //session.SendPacket<cs_packet_move>(movePayload);
-    }
 
     public void SendPakcet<T>(T packet)
     {
