@@ -20,6 +20,7 @@ public class C2PacketHandler
 
     void DoDefualutHandler(PacketHeader header, C2PayloadVector payload, C2Session session)
     {
+        UnityEngine.Debug.Log($"DoDefualutHandler : {header}");
         throw new NotImplementedException();
     }
 

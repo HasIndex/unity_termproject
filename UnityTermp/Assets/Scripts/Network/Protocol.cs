@@ -28,7 +28,7 @@ public enum Protocol
 {
 	HEADER_SIZE = 2,
 	MAX_ID_LEN = 50,
-	MAX_CHAT_LEN = 50,
+	MAX_CHAT_LEN = 80,
 	MAX_STR_LEN = 255
 }
 
@@ -144,7 +144,7 @@ public unsafe struct sc_packet_leave
 
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
-public unsafe struct sc_packet_chat
+public unsafe struct sc_packet_chat // 166
 {
 	public PacketHeader header;
 

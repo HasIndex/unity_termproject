@@ -117,7 +117,7 @@ public class MainPlayer : Singleton<MainPlayer>
 
             // stat
             hp.Initialize(C2Client.Instance.PlayerData.hp, 200);
-            //exp.Initialize(C2Client.Instance.PlayerData.exp, 200 * C2Client.Instance.PlayerData.level);
+            exp.Initialize(C2Client.Instance.PlayerData.exp,(int)( 100.0 * Math.Pow(2.0, (double)C2Client.Instance.PlayerData.level - 1)));
             portrait.SetLevel(C2Client.Instance.PlayerData.level);
 
             Debug.Log($"initial position x : { C2Client.Instance.PlayerData.x}, y : {C2Client.Instance.PlayerData.y} ");
@@ -193,7 +193,8 @@ public class MainPlayer : Singleton<MainPlayer>
         int prevLevel = this.Level;
         if(prevLevel != level)
         {
-            this.exp.MaxValue = level * 200;
+            this.exp.MaxValue = (int)(100.0 * Math.Pow(2.0, (double)C2Client.Instance.PlayerData.level - 1));
+            this.Level = level;
         }
 
         this.hp.CurrentValue = hp;

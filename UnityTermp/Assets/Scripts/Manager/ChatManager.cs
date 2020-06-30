@@ -19,8 +19,6 @@ public class Message
     public MessageType type;
 }
 
-
-
 public class ChatManager : Singleton<ChatManager>
 {
     private int maxChatMessage = 25;
@@ -93,6 +91,8 @@ public class ChatManager : Singleton<ChatManager>
         newMessage.textObject.color = MessageTypeColor(type);
 
         chatRecords.Add(newMessage);
+
+        UnityEngine.Debug.Log($"chat before {text}");
     }
 
     Color MessageTypeColor(MessageType type)

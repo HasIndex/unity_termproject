@@ -17,7 +17,6 @@ public class InGamePacketHandler : C2PacketHandler
         handlers[(Int32)PacketType.S2C_LEAVE]           = OnLeave;
         handlers[(Int32)PacketType.S2C_CHAT]            = OnChat;
         handlers[(Int32)PacketType.S2C_STAT_CHANGE]     = OnStatChange;
-
     }
 
     unsafe void OnChat(PacketHeader header, C2PayloadVector payload, C2Session session)
@@ -30,13 +29,12 @@ public class InGamePacketHandler : C2PacketHandler
         
         var chatString = new String(chatPtr);
 
+        UnityEngine.Debug.Log($"chat before {chatString}");
+
         ChatManager.Instance.AddChat(chatString, MessageType.User);
+
+        UnityEngine.Debug.Log($"chat complete {chatString}");
     }
-
-
-
-
-
 
     // 이동
     void OnMove(PacketHeader header, C2PayloadVector payload, C2Session session)
