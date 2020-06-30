@@ -6,11 +6,10 @@ using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class OtherPlayer : MonoBehaviour
+public class OtherPlayer : NetMonoBehaviour
 {
     public PlayerState currentState;
     public float speed;
-    private Rigidbody2D myRigidbody;
     private Vector3 change;
     private byte direction;
     private Animator animator;
@@ -20,6 +19,11 @@ public class OtherPlayer : MonoBehaviour
     public int Exp { get; set; } = 0;
     public sbyte Direction { get; set; } = 0;
 
+
+    public void Awake()
+    {
+        DontDestroyOnLoad(this);
+    }
 
     void Start()
     {
@@ -33,6 +37,10 @@ public class OtherPlayer : MonoBehaviour
         nameTag.text = "default";
     }
 
+    private void OnEnable()
+    {
+        myRigidbody = GetComponent<Rigidbody2D>();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -66,7 +74,7 @@ public class OtherPlayer : MonoBehaviour
     {
         if (change != Vector3.zero)
         {
-            MoveCharacter();
+            //MoveCharacter();
             animator.SetFloat("moveX", change.x);
             animator.SetFloat("moveY", change.y);
             animator.SetBool("moving", true);
@@ -77,20 +85,11 @@ public class OtherPlayer : MonoBehaviour
         }
     }
 
-    void MoveCharacter()
-    {
-        //change.Normalize();
-        myRigidbody.MovePosition(transform.position + change);
-    }
+    //void MoveCharacter()
+    //{
+    //    //change.Normalize();
+    //    myRigidbody.MovePosition(transform.position + change);
+    //}
 
-    public void MoveCharacterUsingServerPostion(int y, int x)
-    {
-        Vector3 vector = new Vector3();
-        vector.x = x;
-        vector.y = y;
 
-        Debug.Log($"move server postion x {x}, y {y}");
-
-        myRigidbody.MovePosition(vector);
-    }
 }

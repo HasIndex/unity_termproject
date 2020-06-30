@@ -8,14 +8,11 @@ enum EnemyType
 }
 
 
-public class Enemy : MonoBehaviour
+public class Enemy : NetMonoBehaviour
 {
     public int              health;
-    public string           enemyName;
     public int              baseAttack;
     public float            moveSpeed;
-    private Rigidbody2D     myRigidbody;
-    private int             serverID;
     private EnemyType       enemyType;
 
 
@@ -30,18 +27,5 @@ public class Enemy : MonoBehaviour
     {
         
     }
-
-    public void MoveCharacterUsingServerPostion(int y, int x)
-    {
-        Vector3 vector = new Vector3();
-        vector.x = x;
-        vector.y = y;
-
-        Debug.Log($"move server postion x {x}, y {y}");
-
-        myRigidbody.MovePosition(vector);
-    }
-
-
 
 }

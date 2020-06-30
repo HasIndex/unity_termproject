@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPC : NetMonoBehaviour
+public class Ogre : Enemy
 {
     // Start is called before the first frame update
+
+    private Animator animator;
 
     public void Awake()
     {
@@ -12,14 +14,28 @@ public class NPC : NetMonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
     }
 
-
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
     }
 
+    // Update is called once per frame
+
+
     private void OnEnable()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
     }
+
+    void Update()
+    {
+    }
+        //public IEnumerator AttackCo()
+        //{
+        //    currentState = EnemyState.attack;
+        //    anim.SetBool("attack", true);
+        //    yield return new WaitForSeconds(1f);
+        //    currentState = EnemyState.walk;
+        //    anim.SetBool("attack", false);
+        //}
 }

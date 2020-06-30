@@ -54,10 +54,16 @@ public class InGamePacketHandler : C2PacketHandler
         }
         else
         {
-
+            NetMonoBehaviour go = NetworkManager.Instance.TryGet(movePayload.id);
+            if (go != null)
+            {
+                go.MoveToPositionUsingServerPostion(movePayload.x, -movePayload.y);
+            }
+            else
+            {
+                UnityEngine.Debug.Log($"id : {movePayload.id}, x : {movePayload.x}, y :{movePayload.y}");
+            }
         }
-        // 움직여줌.
-        //go.move_to(movePayload.x, movePayload.y);
     }
 
     void OnEnter(PacketHeader header, C2PayloadVector payload, C2Session session)
@@ -66,7 +72,7 @@ public class InGamePacketHandler : C2PacketHandler
 
         payload.Read(out enterPayload);
 
-        UnityEngine.Debug.Log($"enter payload : o type: {enterPayload.o_type} , y: {enterPayload.y}, x: {enterPayload.x}");
+        UnityEngine.Debug.Log($"{enterPayload.id} enter payload : o type: {enterPayload.o_type} , y: {enterPayload.y}, x: {enterPayload.x}");
 
         NetworkManager.Instance.Add(enterPayload.id, enterPayload.o_type, enterPayload.y, enterPayload.x); // 제거 함.
     }

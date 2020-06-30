@@ -40,10 +40,12 @@ public class LoginPacketHandler : C2PacketHandler
 
         UIManager.Instance.CurrentState = UIState.Play;
 
+        SceneManager.LoadSceneAsync("1_Game_mmo", LoadSceneMode.Single);
+
         // 핸들러 변경후 
         C2Session.Instance.SetHandler(new InGamePacketHandler());
+        //C2Session.Instance.gameObject.SetActive(false);
 
-        SceneManager.LoadSceneAsync("1_Game_mmo", LoadSceneMode.Single);
     }
 
     void OnLoginFail(PacketHeader header, C2PayloadVector payload, C2Session session)

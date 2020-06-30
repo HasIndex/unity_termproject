@@ -12,10 +12,10 @@ public class CameraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        minPosition.x += Camera.main.orthographicSize * 1.6f;
+        minPosition.x += Camera.main.orthographicSize * 1.3f;
         minPosition.y += Camera.main.orthographicSize;
 
-        maxPosition.x -= Camera.main.orthographicSize * 1.6f;
+        maxPosition.x -= Camera.main.orthographicSize * 1.3f;
         maxPosition.y -= Camera.main.orthographicSize;
     }
 

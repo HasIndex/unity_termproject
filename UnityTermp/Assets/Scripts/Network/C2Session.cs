@@ -173,7 +173,7 @@ public class C2Session : Singleton<C2Session>
             sendBuffer.MoveReadHead(sentBytes);
             sendBuffer.Rewind();
 
-            Debug.Log($" send : { sentBytes}");
+            //Debug.Log($" send : { sentBytes}");
         }
     }
 
@@ -191,7 +191,7 @@ public class C2Session : Singleton<C2Session>
                 
                 OnRecv();
 
-                Debug.Log($" recv : { receivedBytes }");
+                //Debug.Log($" recv : { receivedBytes }");
             }
             else if (receivedBytes == 0)
             {
@@ -215,7 +215,7 @@ public class C2Session : Singleton<C2Session>
                 break;
 
             // 범위 체크..
-            Debug.Log($"{header.type} : {(int)header.type}, packet size : { header.size} ");
+            //Debug.Log($"{header.type} : {(int)header.type}, packet size : { header.size} ");
 
             handler[header.type](header, this.recvBuffer, this);
 

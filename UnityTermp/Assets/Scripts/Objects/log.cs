@@ -8,8 +8,13 @@ public class Log : Enemy
     public float        chaseRadius;
     public float        attackRadius;
     public Transform    homePosition;
-    private Rigidbody2D myRigidbody;
 
+
+    public void Awake()
+    {
+        DontDestroyOnLoad(this);
+        myRigidbody = GetComponent<Rigidbody2D>();
+    }
 
     void Start()
     {
@@ -31,15 +36,4 @@ public class Log : Enemy
     //        transform.position = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
     //    }
     //}
-
-    public void MoveCharacterUsingServerPostion(int y, int x)
-    {
-        Vector3 vector = new Vector3();
-        vector.x = x;
-        vector.y = y;
-
-        Debug.Log($"move server postion x {x}, y {y}");
-
-        myRigidbody.MovePosition(vector);
-    }
 }

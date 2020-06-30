@@ -102,9 +102,9 @@ public class MainPlayer : Singleton<MainPlayer>
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        //Debug.Log("OnSceneLoaded: " + scene.name);
+        Debug.Log("OnSceneLoaded: " + scene.name);
         //Debug.Log(mode);
-        if( scene.name == "1_Game_mmo")
+        if ( scene.name == "1_Game_mmo")
         {
             C2Client.Instance.Player = this;
             //NetworkManager.Instance.Player = this;
@@ -114,8 +114,9 @@ public class MainPlayer : Singleton<MainPlayer>
             //exp.Initialize(C2Client.Instance.PlayerData.exp, 200 * C2Client.Instance.PlayerData.level);
             portrait.SetLevel(C2Client.Instance.PlayerData.level);
 
+            Debug.Log($"initial position x : { C2Client.Instance.PlayerData.x}, y : {C2Client.Instance.PlayerData.y} ");
             // 좌표
-            MoveCharacterUsingServerPosition(C2Client.Instance.PlayerData.y, C2Client.Instance.PlayerData.x);
+            MoveCharacterUsingServerPosition(-C2Client.Instance.PlayerData.y, C2Client.Instance.PlayerData.x);
         }
     }
 
@@ -164,8 +165,8 @@ public class MainPlayer : Singleton<MainPlayer>
         Vector3 vector = new Vector3();
         vector.x = x;
         vector.y = -y;
-        Debug.Log($"move server postion x {x}, y {y}");
-        myRigidbody.MovePosition(vector);
+        //Debug.Log($"move server postion x {x}, y {y}");
+        myRigidbody.position = vector;
     }
 
     public void SetHP(int minHp, int maxHp)

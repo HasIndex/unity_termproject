@@ -17,7 +17,7 @@ public class NetworkManager : Singleton<NetworkManager>
     internal C2Client                   client;
     public static Int64                 uniqueSessionID = -1;
 
-    private static Dictionary<Int64, GameObject> otherMap = new Dictionary<long, GameObject>();
+    private static Dictionary<Int64, NetMonoBehaviour> otherMap = new Dictionary<long, NetMonoBehaviour>();
 
     void Awake()
     {
@@ -48,26 +48,24 @@ public class NetworkManager : Singleton<NetworkManager>
 
     public void Add(long id, int objectType, int y, int x)
     {
-        GameObject gobj = null;
+        NetMonoBehaviour netMonoBehaviour = null;
+        //GameObject gobj = null;
 
         switch (objectType)
         {
+
             case 0:
-                gobj = ObjectPooler.Instance.Spawn("NPC2", new Vector3(x, -y));
+                netMonoBehaviour = ObjectPooler.Instance.SpawnToNetMonoBehaviour("OtherPlayer", new Vector3(x, -y));
                 break;
-
             case 1:
-                gobj = ObjectPooler.Instance.Spawn("OtherPlayer", new Vector3(x, -y));
+                netMonoBehaviour = ObjectPooler.Instance.SpawnToNetMonoBehaviour("Ogre", new Vector3(x, -y));
                 break;
-
             case 2:
-                gobj = ObjectPooler.Instance.Spawn("Orge", new Vector3(x, -y));
+                netMonoBehaviour = ObjectPooler.Instance.SpawnToNetMonoBehaviour("Log", new Vector3(x, -y));
                 break;
-
             case 3:
-                gobj = ObjectPooler.Instance.Spawn("log", new Vector3(x, -y));
+                netMonoBehaviour = ObjectPooler.Instance.SpawnToNetMonoBehaviour("NPC2", new Vector3(x, -y));
                 break;
-
             default:
                 Debug.Log($"obj type : {objectType}  x : {x} y {y}");
                 new NotImplementedException();
@@ -75,25 +73,31 @@ public class NetworkManager : Singleton<NetworkManager>
         }
 
 
-        if(null != gobj)
+        if(null != netMonoBehaviour)
         {
             try
             {
-                otherMap.Add(id, gobj);
+                otherMap.Add(id, netMonoBehaviour);
             }
             catch(ArgumentException)
             {
                 //GameObject obj;
                 //otherMap.TryGetValue(id, out obj);
-                ObjectPooler.Instance.Recycle(gobj.tag, gobj);
+                //ObjectPooler.Instance.Recycle(netMonoBehaviour.gameObject.tag, netMonoBehaviour);
+
+                ObjectPooler.Instance.Recycle(netMonoBehaviour.gameObject.tag, otherMap[id]);
+                otherMap[id] = netMonoBehaviour;
             }
+        }
+        else
+        {
+            Debug.Log($"null Reference Exception id : {id} obj type : {objectType}  x : {x} y {y}");
         }
     }
 
     public void Remove(long id)
     {
-        GameObject go;
-
+        NetMonoBehaviour go;
         
         otherMap.TryGetValue(id, out go);
         if (go == null)
@@ -102,7 +106,19 @@ public class NetworkManager : Singleton<NetworkManager>
             return;
         }
 
+        otherMap.Remove(id);
         ObjectPooler.Instance.Recycle(go.tag, go);
     }
 
+    public NetMonoBehaviour TryGet(long id)
+    {
+        NetMonoBehaviour go;
+
+        if(otherMap.TryGetValue(id, out go))
+        {
+            return go;
+        }
+
+        return null;
+    }
 }

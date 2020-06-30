@@ -37,6 +37,7 @@ public class C2Client : Singleton<C2Client>
         { 
             session = C2Session.Instance;
             session.Client = this;
+
         }
     }
 
@@ -86,6 +87,7 @@ public class C2Client : Singleton<C2Client>
     {
         if (scene.name == "1_Game_mmo")
         {
+            //C2Session.Instance.gameObject.SetActive(true);
         }
     }
 
