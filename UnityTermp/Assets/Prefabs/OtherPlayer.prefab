@@ -171,7 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   speed: 6
-  nameTag: {fileID: 0}
+  nameTag: {fileID: 8888256476711494407}
 --- !u!1 &1936676810855231048
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,8 @@ public class ObjectPooler : Singleton<ObjectPooler>
 
     public void Awake()
     {
+        DontDestroyOnLoad(this);
+
         prefabIndexDict = new Dictionary<string, GameObject>();
         poolDict = new Dictionary<string, List<GameObject>>();
         for (int i = 0; i < prefabs.Length; i++)

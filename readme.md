@@ -37,6 +37,7 @@ X
 -Coroutine.</br>
 -FSM.</br>
 -Database</br>
+-Stored procedure</br>
 -Handling JSON format</br>
 
 # 핵심 기술 중 수업에서 배우고 활용한 내용

@@ -14,12 +14,11 @@ public class NetworkManager : Singleton<NetworkManager>
     private static string               appVersion = "alpha";
     public static string                serverIP { get; } = "127.0.0.1";
     public static Int32                 serverPort { get; } = 21302;
-    private static Dictionary<Int64, object> otherMap = new Dictionary<long, object>();
     internal C2Client                   client;
     public static Int64                 uniqueSessionID = -1;
 
-    [SerializeField] MainPlayer player;
-    
+    private static Dictionary<Int64, GameObject> otherMap = new Dictionary<long, GameObject>();
+
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -43,12 +42,56 @@ public class NetworkManager : Singleton<NetworkManager>
     {
         get
         {
-            return player;
+            return client.Player;
         }
-        set
+    }
+
+    public void Add(long id, int objectType, int y, int x)
+    {
+        GameObject gobj = null;
+
+        switch (objectType)
         {
-            player = value;
+            case 0:
+                gobj = ObjectPooler.Instance.Spawn("NPC2", new Vector3(x, y));
+                break;
+
+            case 1:
+                gobj = ObjectPooler.Instance.Spawn("OtherPlayer", new Vector3(x, y));
+                break;
+
+
+            case 2:
+                gobj = ObjectPooler.Instance.Spawn("Orge", new Vector3(x, y));
+                break;
+
+            case 3:
+                gobj = ObjectPooler.Instance.Spawn("log", new Vector3(x, y));
+                break;
+
+            default:
+                Debug.Log($"obj type : {objectType}  x : {x} y {y}");
+                new NotImplementedException();
+                break;
         }
+
+
+        if(null != gobj)
+        {
+            otherMap.Add(id, new GameObject());
+        }
+    }
+
+    public void Remove(long id)
+    {
+        //GameObject go;
+        //otherMap.TryGetValue(id , out go);
+        //if(go == null)
+        //{
+        //    Debug.Log("없는 id");
+        //}
+
+        //ObjectPooler.Instance.Recycle("", go);
     }
 
 }

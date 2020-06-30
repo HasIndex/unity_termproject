@@ -2,8 +2,11 @@
 
 
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEditor.U2D.Animation;
+using Unity.IO;
+using UnityEngine;
 
 public class InGamePacketHandler : C2PacketHandler
 {
@@ -32,14 +35,7 @@ public class InGamePacketHandler : C2PacketHandler
 
 
 
-    void OnEnter(PacketHeader header, C2PayloadVector payload, C2Session session)
-    {
-        sc_packet_enter enterPayload;
 
-        payload.Read(out enterPayload);
-
-
-    }
 
 
     // 이동
@@ -52,8 +48,27 @@ public class InGamePacketHandler : C2PacketHandler
         // 네트웥크 아이디 찾아서 
         //var go;//NetworkManager.Instance. movePayload.id;
 
+        if (C2Client.Instance.serverID == movePayload.id)
+        {
+            C2Client.Instance.Player.MoveCharacterUsingServerPosition(movePayload.y, movePayload.x);
+        }
+        else
+        {
+
+        }
         // 움직여줌.
         //go.move_to(movePayload.x, movePayload.y);
+    }
+
+    void OnEnter(PacketHeader header, C2PayloadVector payload, C2Session session)
+    {
+        sc_packet_enter enterPayload;
+
+        payload.Read(out enterPayload);
+
+        UnityEngine.Debug.Log($"enter payload : o type: {enterPayload.o_type} , y: {enterPayload.y}, x: {enterPayload.x}");
+
+        NetworkManager.Instance.Add(enterPayload.id, enterPayload.o_type, enterPayload.y, enterPayload.x); // 제거 함.
     }
 
     // 로그인 씬에서 나감. 사실상 연결 끊기.
@@ -62,6 +77,8 @@ public class InGamePacketHandler : C2PacketHandler
         sc_packet_leave leavePayload;
 
         payload.Read(out leavePayload);
+
+        NetworkManager.Instance.Remove(leavePayload.id); // 제거 함.
     }
 
 

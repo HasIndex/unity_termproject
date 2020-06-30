@@ -4,9 +4,15 @@ using System;
 using System.Runtime.InteropServices;
 
 
-public enum PacketType : sbyte
+public enum PacketType : byte
 {
 	PT_NONE,
+	
+	C2S_LOGIN = 1,
+	C2S_MOVE,
+	C2S_ATTACK,
+	C2S_CHAT,
+	C2S_LOGOUT,
 
 	S2C_LOGIN_OK = 1,
 	S2C_LOGIN_FAIL,
@@ -16,12 +22,6 @@ public enum PacketType : sbyte
 	S2C_CHAT,
 	S2C_STAT_CHANGE,
 	PT_MAX,
-
-	C2S_LOGIN = 1,
-	C2S_MOVE,
-	C2S_ATTACK,
-	C2S_CHAT,
-	C2S_LOGOUT,
 };
 
 public enum Protocol
@@ -32,7 +32,7 @@ public enum Protocol
 	MAX_STR_LEN = 255
 }
 
-public enum ServerDirection : sbyte
+public enum ServerDirection : byte
 {
 	Up, Down, Left, Right
 }
@@ -41,7 +41,7 @@ public enum ServerDirection : sbyte
 [StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct PacketHeader
 {
-    public sbyte		size;
+    public byte			size;
     public PacketType	type;
 }
 
@@ -119,15 +119,18 @@ public unsafe struct sc_packet_move
 	public UInt32 move_time;
 };
 
-[StructLayout(LayoutKind.Sequential, Pack = 1)]
+
+
+[StructLayout(LayoutKind.Sequential, Pack = 1)] 
 public unsafe struct sc_packet_enter // 
 {
 	public PacketHeader header;
 
 	public int id;
-	public fixed char name[(int)Protocol.MAX_ID_LEN]; // wide-char로 변경 예정.
-	public sbyte o_type;
+	public byte o_type;
 	public short x, y;
+
+	public fixed char name[(int)Protocol.MAX_ID_LEN];
 };
 
 

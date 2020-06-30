@@ -108,7 +108,7 @@ public class C2Client : Singleton<C2Client>
 
         cs_packet_login loginPacket;
         loginPacket.header.type = PacketType.C2S_LOGIN;
-        loginPacket.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_login));
+        loginPacket.header.size = (byte)Marshal.SizeOf(typeof(cs_packet_login));
 
         byte[] unicodeByte = System.Text.Encoding.Unicode.GetBytes(C2Client.Instance.Nickname);
         int nicknameLength = unicodeByte.Length > (int)Protocol.MAX_ID_LEN ? (int)Protocol.MAX_ID_LEN : unicodeByte.Length;
@@ -123,7 +123,7 @@ public class C2Client : Singleton<C2Client>
 
         cs_packet_move movePayload;
         movePayload.header.type = PacketType.C2S_MOVE;
-        movePayload.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_move));
+        movePayload.header.size = (byte)Marshal.SizeOf(typeof(cs_packet_move));
         movePayload.direction = direction;
         movePayload.move_time = 0;
 
@@ -137,7 +137,7 @@ public class C2Client : Singleton<C2Client>
 
         cs_packet_attack attackPayload;
         attackPayload.header.type = PacketType.C2S_ATTACK;
-        attackPayload.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_attack));
+        attackPayload.header.size = (byte)Marshal.SizeOf(typeof(cs_packet_attack));
 
         c2Session.SendPacket(attackPayload);
     }
@@ -149,7 +149,7 @@ public class C2Client : Singleton<C2Client>
 
         cs_packet_chat chatPayload;
         chatPayload.header.type = PacketType.C2S_CHAT;
-        chatPayload.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_chat));
+        chatPayload.header.size = (byte)Marshal.SizeOf(typeof(cs_packet_chat));
 
 
         byte[] chatBytes = System.Text.Encoding.Unicode.GetBytes(msg);
@@ -168,7 +168,7 @@ public class C2Client : Singleton<C2Client>
 
         cs_packet_logout logoutPayload;
         logoutPayload.header.type = PacketType.C2S_LOGOUT;
-        logoutPayload.header.size = (sbyte)Marshal.SizeOf(typeof(cs_packet_logout));
+        logoutPayload.header.size = (byte)Marshal.SizeOf(typeof(cs_packet_logout));
 
         c2Session.SendPacket(logoutPayload);
     }

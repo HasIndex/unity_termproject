@@ -59,12 +59,12 @@ public class MainPlayer : Singleton<MainPlayer>
         if(Input.GetKeyDown(KeyCode.UpArrow) == true)
         {
             change.y = +1.0f;
-            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Up);
+            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Down);
         }
         else if(Input.GetKeyDown(KeyCode.DownArrow) == true)
         {
             change.y = -1.0f;
-            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Down);
+            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Up);
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow) == true)
         {
@@ -107,7 +107,7 @@ public class MainPlayer : Singleton<MainPlayer>
         if( scene.name == "1_Game_mmo")
         {
             C2Client.Instance.Player = this;
-            NetworkManager.Instance.Player = this;
+            //NetworkManager.Instance.Player = this;
 
             // stat
             hp.Initialize(C2Client.Instance.PlayerData.hp, 200);
