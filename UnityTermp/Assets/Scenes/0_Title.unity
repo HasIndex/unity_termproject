@@ -1001,6 +1001,7 @@ GameObject:
   - component: {fileID: 1684258062}
   - component: {fileID: 1684258061}
   - component: {fileID: 1684258060}
+  - component: {fileID: 1684258063}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -1078,7 +1079,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 50
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -1128,3 +1129,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1684258058}
   m_CullTransparentMesh: 0
+--- !u!114 &1684258063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684258058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bda0c38c1f4198408af322559d61585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputField: {fileID: 1684258060}

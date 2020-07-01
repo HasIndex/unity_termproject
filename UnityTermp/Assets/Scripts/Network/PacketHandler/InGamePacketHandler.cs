@@ -30,7 +30,6 @@ public class InGamePacketHandler : C2PacketHandler
         var chatString = new String((char*)chatPtr);
 
         ChatManager.Instance.AddChat(chatString, MessageType.User);
-
     }
 
     // 이동

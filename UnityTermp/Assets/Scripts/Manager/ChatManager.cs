@@ -59,7 +59,10 @@ public class ChatManager : Singleton<ChatManager>
                 {
                     if (inputField.text != string.Empty) // 내 채팅 입력 
                     {
-                        AddChat(inputField.text, MessageType.User);
+                        string chatMsg = $"{C2Client.Instance.Nickname} : {inputField.text}";
+
+                        //AddChat(chatMsg, MessageType.User);
+                        C2Client.Instance.SendChatPacket(chatMsg);
                     }
 
                     inputField.text = string.Empty;
@@ -91,8 +94,6 @@ public class ChatManager : Singleton<ChatManager>
         newMessage.textObject.color = MessageTypeColor(type);
 
         chatRecords.Add(newMessage);
-
-        UnityEngine.Debug.Log($"chat before {text}");
     }
 
     Color MessageTypeColor(MessageType type)

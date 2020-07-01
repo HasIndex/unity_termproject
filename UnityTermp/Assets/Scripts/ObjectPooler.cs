@@ -95,7 +95,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
                 netMonoBehaviour = gobj.GetComponent<OtherPlayer>();
                 break;
 
-            case "Log":
+            case "log":
                 netMonoBehaviour = gobj.GetComponent<Log>();
                 break;
 
@@ -105,7 +105,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
 
 
             default:
-                Debug.Log("NotFound Script in ObjectPool");
+                Debug.Log($"NotFound Script in ObjectPool : {gobj.tag}");
                 break;
         }
         
@@ -212,7 +212,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
                     poolDict["NPC2"].Add(go.gameObject);
                     break;
 
-                case "Log":
+                case "log":
                     poolDict["Log"].Add(go.gameObject);
                     break;
 
