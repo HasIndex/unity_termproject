@@ -17,6 +17,9 @@ public class UIManager : Singleton<UIManager>
     private void Awake()
     {
         DontDestroyOnLoad(this);
+
+        Screen.SetResolution(1280, 1024, false);
+
     }
 
     public void Update()

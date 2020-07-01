@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Dynamic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
