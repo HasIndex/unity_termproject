@@ -35,8 +35,9 @@ public class NetMonoBehaviour : MonoBehaviour
         vector.y = y;
 
         try 
-        { 
-            myRigidbody.MovePosition(vector);
+        {
+            //myRigidbody.MovePosition(vector);
+            gameObject.transform.position = vector;
         }
         catch(MissingReferenceException)
         {

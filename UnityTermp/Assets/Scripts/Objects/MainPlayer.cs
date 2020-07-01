@@ -71,7 +71,7 @@ public class MainPlayer : Singleton<MainPlayer>
         attackTimer += Time.deltaTime;
         if(attackTimer >= 1.0f)
         {
-            if (currentState != PlayerState.Attack  && Input.GetKey(KeyCode.Space) == true)
+            if (currentState != PlayerState.Attack  && Input.GetKey(KeyCode.A) == true)
             {
                 C2Client.Instance.SendAttackPacket();
                 StartCoroutine(AttackCo());
@@ -202,8 +202,9 @@ public class MainPlayer : Singleton<MainPlayer>
         Vector3 vector = new Vector3();
         vector.x = x;
         vector.y = y;
-        
-        myRigidbody.position = vector;
+
+        //myRigidbody.position = vector;
+        gameObject.transform.position = vector;
     }
 
     public void SetHP(int minHp, int maxHp)
