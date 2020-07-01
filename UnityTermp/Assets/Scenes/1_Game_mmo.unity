@@ -937,7 +937,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 11
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2060,7 +2060,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1423900884}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.62, y: 8.6, z: 0}
+  m_LocalPosition: {x: 8.62, y: -786.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2080,7 +2080,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogBox: {fileID: 698872386}
   dialogText: {fileID: 2095099689}
-  dialog: legeand
+  dialog: "\uC2DC\uC791\uC758 \uB9C8\uC744."
   playerInRange: 0
 --- !u!4 &1483707532 stripped
 Transform:
@@ -2095,6 +2095,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3266318849642422798, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.793
+      objectReference: {fileID: 0}
+    - target: {fileID: 4177281311248265118, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
+        type: 3}
+      propertyPath: m_FontSize
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 6666078593519440528, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2192,7 +2202,7 @@ PrefabInstance:
     - target: {fileID: 2362775593784895665, guid: aed60d39a017b624fb3c12fa695f0234,
         type: 3}
       propertyPath: m_Name
-      value: unity_termp2 (1)
+      value: TileMap
       objectReference: {fileID: 0}
     - target: {fileID: 2362775593784895665, guid: aed60d39a017b624fb3c12fa695f0234,
         type: 3}
@@ -2681,7 +2691,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 80
+  m_CharacterLimit: 70
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []

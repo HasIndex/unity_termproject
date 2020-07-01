@@ -20,7 +20,10 @@ public class MainPlayer : Singleton<MainPlayer>
     private byte            direction;
     private Animator        animator;
     private C2Client        client;
-    
+
+    private float             attackTimer = 1.0f;
+    private float             movementTimer = 1.0f;
+
     public int Level { get; set; } = 1;
     public int Exp { get; set; } = 0;
     public sbyte Direction { get; set; } = 0;
@@ -56,44 +59,67 @@ public class MainPlayer : Singleton<MainPlayer>
             return;
 
         change = Vector3.zero;
-        if(Input.GetKeyDown(KeyCode.UpArrow) == true)
-        {
-            change.y = +1.0f;
-            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Up);
-        }
-        else if(Input.GetKeyDown(KeyCode.DownArrow) == true)
-        {
-            change.y = -1.0f;
-            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Down);
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow) == true)
-        {
-            change.x = -1.0f;
 
-            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Left);
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) == true)
-        {
-            change.x = +1.0f;
+        CheckInputForMovement();
+        CheckInputForAttack();
+    }
 
-            C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Right);
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Space) == true)
+    private void CheckInputForAttack()
+    {
+        attackTimer += Time.deltaTime;
+        if(attackTimer >= 1.0f)
         {
-            C2Client.Instance.SendAttackPacket();
+            if (currentState != PlayerState.Attack  && Input.GetKey(KeyCode.Space) == true)
+            {
+                Debug.Log("atack");
+                C2Client.Instance.SendAttackPacket();
+                StartCoroutine(AttackCo());
+                attackTimer = 0.0f;
+            }
+            //if (currentState != PlayerState.Attack && Input.GetButtonDown("attack"))
+            //{
+            //    StartCoroutine(AttackCo());
+            //    movementTimer = 0.0f;
+            //}
+            //else if (currentState == PlayerState.Walk)
+            //{
+            //    UpdateAnimatorAndMove();
+            //    movementTimer = 0.0f;
+            //}
+
         }
+    }
 
-
-
-        // path finding 우선.
-        if (currentState != PlayerState.Attack && Input.GetButtonDown("attack"))
+    private void CheckInputForMovement()
+    {
+        movementTimer += Time.deltaTime;
+        if (movementTimer >= 1.0f)
         {
-            StartCoroutine(AttackCo());
-        }
-        else if (currentState == PlayerState.Walk)
-        {
-            UpdateAnimatorAndMove();
+            if (Input.GetKey(KeyCode.UpArrow) == true)
+            {
+                change.y = +1.0f;
+                C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Up);
+                movementTimer = 0.0f;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow) == true)
+            {
+                change.y = -1.0f;
+                C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Down);
+                movementTimer = 0.0f;
+            }
+            if (Input.GetKey(KeyCode.LeftArrow) == true)
+            {
+                change.x = -1.0f;
+                C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Left);
+                movementTimer = 0.0f;
+            }
+            else if (Input.GetKey(KeyCode.RightArrow) == true)
+            {
+                change.x = +1.0f;
+
+                C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Right);
+                movementTimer = 0.0f;
+            }
         }
     }
 

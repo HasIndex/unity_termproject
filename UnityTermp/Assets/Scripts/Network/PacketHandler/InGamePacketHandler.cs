@@ -52,6 +52,7 @@ public class InGamePacketHandler : C2PacketHandler
             if (go != null)
             {
                 go.MoveToPositionUsingServerPostion(-movePayload.y, movePayload.x);
+                UnityEngine.Debug.Log($"id : {movePayload.id}, x : {movePayload.x}, y :{movePayload.y}");
             }
             else
             {
