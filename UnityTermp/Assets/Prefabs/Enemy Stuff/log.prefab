@@ -260,6 +260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc75296e01c18654c9e3ccdc1d149040, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serverID: 0
+  textMesh: {fileID: 6879558181400496301}
   health: 2
   baseAttack: 1
   moveSpeed: 1.5

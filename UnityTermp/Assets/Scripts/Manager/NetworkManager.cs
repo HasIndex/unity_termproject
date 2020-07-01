@@ -46,14 +46,13 @@ public class NetworkManager : Singleton<NetworkManager>
         }
     }
 
-    public void Add(long id, int objectType, int y, int x)
+    public void Add(long id, int objectType, string nickname, int y, int x)
     {
         NetMonoBehaviour netMonoBehaviour = null;
         //GameObject gobj = null;
 
         switch (objectType)
         {
-
             case 0:
                 netMonoBehaviour = ObjectPooler.Instance.SpawnToNetMonoBehaviour("OtherPlayer", new Vector3(x, -y));
                 break;
@@ -72,9 +71,11 @@ public class NetworkManager : Singleton<NetworkManager>
                 break;
         }
 
-
+        
         if(null != netMonoBehaviour)
         {
+            netMonoBehaviour.ServerID = id;
+            netMonoBehaviour.Nickname = nickname;
             try
             {
                 otherMap.Add(id, netMonoBehaviour);

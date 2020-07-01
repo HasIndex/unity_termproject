@@ -9,9 +9,24 @@ using UnityEngine;
 public class NetMonoBehaviour : MonoBehaviour
 {
     protected Rigidbody2D   myRigidbody;
-    public long          ServerID { get; set; } = default;
-    public string        Nickname { get; set; } = String.Empty;
+    public long          ServerID { get{ return serverID; } set { serverID = value; } }
 
+    [SerializeField] long serverID;
+    [SerializeField] string nickname;
+    [SerializeField] TextMesh textMesh;
+
+    public string  Nickname 
+    { 
+        get 
+        { 
+            return nickname; 
+        } 
+        set 
+        { 
+            textMesh.text = value;
+            nickname = value;
+        } 
+    }
 
     public void MoveToPositionUsingServerPostion(int y, int x)
     {

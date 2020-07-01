@@ -6,7 +6,7 @@ public class Ogre : Enemy
 {
     // Start is called before the first frame update
 
-    private Animator animator;
+    private Animator anim;
 
     public void Awake()
     {
@@ -25,17 +25,23 @@ public class Ogre : Enemy
     private void OnEnable()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+        Attack();
     }
 
     void Update()
     {
     }
-        //public IEnumerator AttackCo()
-        //{
-        //    currentState = EnemyState.attack;
-        //    anim.SetBool("attack", true);
-        //    yield return new WaitForSeconds(1f);
-        //    currentState = EnemyState.walk;
-        //    anim.SetBool("attack", false);
-        //}
+
+    public void Attack()
+    {
+        AttackCo();
+    }
+    public IEnumerator AttackCo()
+    {
+        //currentState = EnemyState.attack;
+        anim.SetBool("attack", true);
+        yield return new WaitForSeconds(0.5f);
+        //currentState = EnemyState.walk;
+        anim.SetBool("attack", false);
+    }
 }

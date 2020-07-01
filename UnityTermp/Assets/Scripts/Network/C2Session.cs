@@ -214,7 +214,7 @@ public class C2Session : Singleton<C2Session>
                 break;
 
             // 범위 체크..
-            Debug.Log($"{header.type} : {(int)header.type}, packet size : { header.size} ");
+            //Debug.Log($"{header.type} : {(int)header.type}, packet size : { header.size} ");
 
             handler[header.type](header, this.recvBuffer, this);
 

@@ -1316,6 +1316,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 698872386}
   m_CullTransparentMesh: 0
+--- !u!1 &715569999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5943406328223971048, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1488842220}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &715570000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715569999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c34db42a3af066e4a832fe0251ae1d6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 1488842221}
 --- !u!1001 &826774846
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2103,7 +2122,12 @@ PrefabInstance:
     - target: {fileID: 4177281311248265118, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
         type: 3}
       propertyPath: m_FontSize
-      value: 40
+      value: 57
+      objectReference: {fileID: 0}
+    - target: {fileID: 4177281311248265118, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
+        type: 3}
+      propertyPath: m_Color.rgba
+      value: 4278251519
       objectReference: {fileID: 0}
     - target: {fileID: 6666078593519440528, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
         type: 3}
@@ -2180,6 +2204,11 @@ PrefabInstance:
       propertyPath: exp
       value: 
       objectReference: {fileID: 173864291}
+    - target: {fileID: 6666078593519440531, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
+        type: 3}
+      propertyPath: nameTag
+      value: 
+      objectReference: {fileID: 715570000}
     - target: {fileID: 6666078593519440534, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
         type: 3}
       propertyPath: m_Name
@@ -2187,6 +2216,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca85c4f5bc873aa42b313d7b3b827b5c, type: 3}
+--- !u!102 &1488842221 stripped
+TextMesh:
+  m_CorrespondingSourceObject: {fileID: 4177281311248265118, guid: ca85c4f5bc873aa42b313d7b3b827b5c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1488842220}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1491528385
 PrefabInstance:
   m_ObjectHideFlags: 0

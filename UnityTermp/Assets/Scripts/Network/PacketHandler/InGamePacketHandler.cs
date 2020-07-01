@@ -61,7 +61,7 @@ public class InGamePacketHandler : C2PacketHandler
         }
     }
 
-    void OnEnter(PacketHeader header, C2PayloadVector payload, C2Session session)
+    unsafe void OnEnter(PacketHeader header, C2PayloadVector payload, C2Session session)
     {
         sc_packet_enter enterPayload;
 
@@ -75,7 +75,9 @@ public class InGamePacketHandler : C2PacketHandler
         }
         else
         {
-            NetworkManager.Instance.Add(enterPayload.id, enterPayload.o_type, enterPayload.y, enterPayload.x); // 제거 함.
+            string nickname = new string((char*)enterPayload.name);
+
+            NetworkManager.Instance.Add(enterPayload.id, enterPayload.o_type, nickname, enterPayload.y, enterPayload.x); // 제거 함.
         }
     }
 

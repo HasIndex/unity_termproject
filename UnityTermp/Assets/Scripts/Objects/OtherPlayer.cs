@@ -85,6 +85,7 @@ public class OtherPlayer : NetMonoBehaviour
         }
     }
 
+    
     //void MoveCharacter()
     //{
     //    //change.Normalize();

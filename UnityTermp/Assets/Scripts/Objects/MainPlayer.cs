@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public enum PlayerState
@@ -29,16 +30,16 @@ public class MainPlayer : Singleton<MainPlayer>
     public sbyte Direction { get; set; } = 0;
 
 
-    [SerializeField] private Stat       hp;
-    [SerializeField] private Stat       exp;
-    [SerializeField] private Portrait   portrait;
-
+    [SerializeField] Stat hp;
+    [SerializeField] Stat exp;
+    [SerializeField] Portrait portrait;
+    [SerializeField] NameTag nameTag;
     void Awake()
     {
         DontDestroyOnLoad(this);
 
-        hp.Initialize(200, 200);
-        exp.Initialize(200, 200);
+        hp.Initialize(150, 200);
+        exp.Initialize(0, 200);
         portrait.SetLevel(1);
 
         currentState    = PlayerState.Walk;
@@ -62,6 +63,7 @@ public class MainPlayer : Singleton<MainPlayer>
 
         CheckInputForMovement();
         CheckInputForAttack();
+        UpdateAnimator();
     }
 
     private void CheckInputForAttack()
@@ -71,9 +73,9 @@ public class MainPlayer : Singleton<MainPlayer>
         {
             if (currentState != PlayerState.Attack  && Input.GetKey(KeyCode.Space) == true)
             {
-                Debug.Log("atack");
                 C2Client.Instance.SendAttackPacket();
                 StartCoroutine(AttackCo());
+                //animator.SetBool("attacking", true);
                 attackTimer = 0.0f;
             }
             //if (currentState != PlayerState.Attack && Input.GetButtonDown("attack"))
@@ -100,18 +102,21 @@ public class MainPlayer : Singleton<MainPlayer>
                 change.y = +1.0f;
                 C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Up);
                 movementTimer = 0.0f;
+                MoveCharacter();
             }
             else if (Input.GetKey(KeyCode.DownArrow) == true)
             {
                 change.y = -1.0f;
                 C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Down);
                 movementTimer = 0.0f;
+                MoveCharacter();
             }
             if (Input.GetKey(KeyCode.LeftArrow) == true)
             {
                 change.x = -1.0f;
                 C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Left);
                 movementTimer = 0.0f;
+                MoveCharacter();
             }
             else if (Input.GetKey(KeyCode.RightArrow) == true)
             {
@@ -119,6 +124,7 @@ public class MainPlayer : Singleton<MainPlayer>
 
                 C2Client.Instance.SendMovePacket((sbyte)ServerDirection.Right);
                 movementTimer = 0.0f;
+                MoveCharacter();
             }
         }
     }
@@ -134,19 +140,18 @@ public class MainPlayer : Singleton<MainPlayer>
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("OnSceneLoaded: " + scene.name);
-        //Debug.Log(mode);
         if ( scene.name == "1_Game_mmo")
         {
             C2Client.Instance.Player = this;
             //NetworkManager.Instance.Player = this;
+
+            nameTag.Text.text = C2Client.Instance.Nickname;
 
             // stat
             hp.Initialize(C2Client.Instance.PlayerData.hp, 200);
             exp.Initialize(C2Client.Instance.PlayerData.exp,(int)( 100.0 * Math.Pow(2.0, (double)C2Client.Instance.PlayerData.level - 1)));
             portrait.SetLevel(C2Client.Instance.PlayerData.level);
 
-            Debug.Log($"initial position x : { C2Client.Instance.PlayerData.x}, y : {C2Client.Instance.PlayerData.y} ");
             // 좌표
             MoveCharacterUsingServerPosition(-C2Client.Instance.PlayerData.y, C2Client.Instance.PlayerData.x);
         }
@@ -166,11 +171,11 @@ public class MainPlayer : Singleton<MainPlayer>
         currentState = PlayerState.Walk;
     }
 
-    private void UpdateAnimatorAndMove()
+    private void UpdateAnimator()
     {
         if (change != Vector3.zero)
         {
-            MoveCharacter();
+            //MoveCharacter();
             animator.SetFloat("moveX", change.x);
             animator.SetFloat("moveY", change.y);
             animator.SetBool("moving", true);
@@ -197,7 +202,7 @@ public class MainPlayer : Singleton<MainPlayer>
         Vector3 vector = new Vector3();
         vector.x = x;
         vector.y = y;
-        //Debug.Log($"move server postion x {x}, y {y}");
+        
         myRigidbody.position = vector;
     }
 
