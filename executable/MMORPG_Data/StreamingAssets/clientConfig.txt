@@ -1,5 +1,5 @@
 { 
 	"gameVersion" : "kpu",
 	"appVersion" : "1.0",
-	"actionInterval" : 0.4
+	"actionInterval" : 0.2
 }

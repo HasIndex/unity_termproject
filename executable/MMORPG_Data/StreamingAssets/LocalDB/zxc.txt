@@ -1,0 +1,1 @@
+{"nickname":"zxc","level":2,"exp":13,"hp":200,"x":27,"y":200}

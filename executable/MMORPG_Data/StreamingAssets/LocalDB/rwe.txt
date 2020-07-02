@@ -1,0 +1,1 @@
+{"nickname":"rwe","level":2,"exp":5,"hp":150,"x":186,"y":226}
