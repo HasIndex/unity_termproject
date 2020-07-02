@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,15 +33,18 @@ public class LoginButton : MonoBehaviour
     
     public void OnClick()
     {
-        //SceneManager.LoadSceneAsync("1_Game_mmo", LoadSceneMode.Single);
-        Debug.Log(inputField.text);
-
         C2Client.Instance.Nickname = inputField.text;
 
-        C2Client.Instance.SendLoginPacket();
-        // login_packet.name; 
-        //Debug.Log();
-        // C2Session.Instance.SendPacket<cs_packet_enter>(enter_packet);
+        Schema schema;
+        if (LocalDBManager.Instance.TrySelectSchema(C2Client.Instance.Nickname,  out schema))//.SelectSchema() ;
+        {
+            C2Client.Instance.SendLoginPacket(schema.level, schema.exp, schema.hp, schema.x, schema.y);
+        }
+        else
+        {
+            LocalDBManager.Instance.InsertSchema(C2Client.Instance.Nickname, 1, 0, 200, -1, -1);
+            C2Client.Instance.SendLoginPacket(1, 0, 200, -1, -1);
+        }
     }
 
 }

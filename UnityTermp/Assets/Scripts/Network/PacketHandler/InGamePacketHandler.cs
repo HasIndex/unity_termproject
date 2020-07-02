@@ -2,7 +2,7 @@
 
 
 using System;
-
+using System.Diagnostics;
 
 public class InGamePacketHandler : C2PacketHandler
 {
@@ -41,6 +41,8 @@ public class InGamePacketHandler : C2PacketHandler
         if (C2Client.Instance.serverID == movePayload.id)
         {
             C2Client.Instance.Player.MoveCharacterUsingServerPosition(-movePayload.y, movePayload.x);
+
+            LocalDBManager.Instance.UpdateSchema(C2Client.Instance.Nickname, -1, -1, -1, movePayload.x, movePayload.y);
         }
         else
         {
@@ -68,7 +70,10 @@ public class InGamePacketHandler : C2PacketHandler
         if (C2Client.Instance.serverID == enterPayload.id)
         {
             MainPlayer.Instance.ResetWhenResapwn();
+
             C2Client.Instance.Player.MoveCharacterUsingServerPosition(-enterPayload.y, enterPayload.x);
+
+            LocalDBManager.Instance.UpdateSchema(C2Client.Instance.Nickname, -1 ,-1, -1, enterPayload.x, enterPayload.y);
         }
         else
         {
@@ -97,7 +102,10 @@ public class InGamePacketHandler : C2PacketHandler
 
         // 스탯 업데이트 해줌.
         MainPlayer.Instance.SetStat(statChangePayload.level, statChangePayload.hp, statChangePayload.exp);
-        
+
+        LocalDBManager.Instance.UpdateSchema(C2Client.Instance.Nickname, statChangePayload.level, statChangePayload.exp, statChangePayload.hp);
+
+        UnityEngine.Debug.Log("stat change!");
     }
 
     //// 회원가입

@@ -7,6 +7,15 @@ using UnityEngine;
 
 public class LocalDBManager : Singleton<LocalDBManager>
 {
+    private enum DBManagerState
+    {
+       Default , Save, 
+    }
+
+
+    private DBManagerState currentState = DBManagerState.Default;
+    private float timer = 0.0f;
+
     public string NickName { get; set; }
     public int Level { get; set; }
     public int Exp { get; set; }
@@ -14,12 +23,30 @@ public class LocalDBManager : Singleton<LocalDBManager>
 
     private Dictionary<string, Schema> localDatabase = new Dictionary<string, Schema>();
 
+    public bool HasSchema(string nick)
+    {
+        Schema schema;
+        return localDatabase.TryGetValue(nick, out schema);
+    }
 
     private void Awake()
     {
         DontDestroyOnLoad(this);
 
         LoadLocalDB();
+    }
+
+    public void Update()
+    {
+        timer += Time.deltaTime;
+        if(timer >= 5.0f && currentState == DBManagerState.Default)
+        {
+            LocalDBManager.Instance.SaveSchema(C2Client.Instance.Nickname);
+            //currentState = DBManagerState.Save;
+            timer = 0.0f;
+
+            Debug.Log("save");
+        }
     }
 
     public void LoadLocalDB()
@@ -37,7 +64,7 @@ public class LocalDBManager : Singleton<LocalDBManager>
     }
 
 
-    public bool UpdateSchema(string nick, int level = -1, int exp = -1, int hp = -1, bool save = false)
+    public bool UpdateSchema(string nick, int level = -1, int exp = -1, int hp = -1, int x = -1, int y = -1,  bool save = false)
     {
         Schema schema;
         if (localDatabase.TryGetValue(nick, out schema))
@@ -55,10 +82,22 @@ public class LocalDBManager : Singleton<LocalDBManager>
                 schema.hp = hp;
             }
 
-            if(save == true)
+            if (x != -1)
+            {
+                schema.x = x;
+            }
+
+            if (y != -1)
+            {
+                schema.y = y;
+            }
+
+
+            if (save == true)
             {
                 SaveSchema(nick);
             }
+
 
             return true;
         }
@@ -88,14 +127,14 @@ public class LocalDBManager : Singleton<LocalDBManager>
             return false;
     }
 
-    public bool InsertSchema(string nick, int level, int exp, int hp) // 없을시 생성.
+    public bool InsertSchema(string nick, int level, int exp, int hp, int x, int y) // 없을시 생성.
     {
         string path = $"{Application.dataPath}/Resources/LocalDB/{nick}.txt";
 
         Schema schema;
         if (localDatabase.TryGetValue(nick, out schema) == false)  //  없는 경우.
         {            
-            schema = new Schema {exp = exp, hp = hp, level = level, nickname = nick };
+            schema = new Schema {exp = exp, hp = hp, level = level, nickname = nick, x = x, y = y };
 
             JsonData schameData = JsonMapper.ToJson(schema);
 
@@ -136,5 +175,24 @@ public class LocalDBManager : Singleton<LocalDBManager>
 
             File.WriteAllText(path, schameData.ToString());
         }
+        else
+        {
+            JsonData schameData = JsonMapper.ToJson(schema);
+
+            File.WriteAllText(path, schameData.ToString());
+        }
+    }
+
+    public void SaveSchemaAsync(string nick)
+    {
+        //string path = $"{Application.dataPath}/Resources/LocalDB/{nick}.txt";
+
+        //Schema schema;
+        //if (localDatabase.TryGetValue(nick, out schema) == false)  //  없는 경우.
+        //{
+        //    JsonData schameData = JsonMapper.ToJson(schema);
+
+        //    File.WriteAllText(path, schameData.ToString());
+        //}
     }
 }

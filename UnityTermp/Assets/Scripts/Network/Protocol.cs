@@ -54,6 +54,8 @@ public unsafe struct cs_packet_login
 	public int level;
 	public int hp;
 	public int exp;
+	public int x;
+	public int y;
 	public fixed UInt16 name[(int)Protocol.MAX_ID_LEN];
 };
 

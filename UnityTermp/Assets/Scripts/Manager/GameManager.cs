@@ -28,8 +28,6 @@ public class GameManager : Singleton<GameManager>
 
         string[] paths = BetterStreamingAssets.GetFiles("\\", "*.txt", SearchOption.AllDirectories);
 
-        //TextAsset jsonFile = Resources.Load("clientConfig") as TextAsset;
-
         for (int n = 0; n < paths.Length; ++n)
         {
             byte[] byteContents = BetterStreamingAssets.ReadAllBytes(paths[n]);
@@ -38,6 +36,7 @@ public class GameManager : Singleton<GameManager>
             if ("clientConfig.txt" == paths[n])
             {
                 LoadClientConfig(contentsString);
+                Debug.Log("load clientconfig");
             }
             else
             if ("serverConfig.txt" == paths[n])

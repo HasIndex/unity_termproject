@@ -32,12 +32,11 @@ public class NetworkManager : Singleton<NetworkManager>
 
         LoadServerConfigUsingJson();
 
-        C2Session.Instance.OnInit();
+        //C2Session.Instance.OnInit();
     }
 
     private void LoadServerConfigUsingJson()
     {
-
         //TextAsset jsonFile = Resources.Load("serverConfig") as TextAsset;
 
         //string MapText = jsonFile.text;  // 스트링에 로드된 텍스트 에셋을 저장

@@ -7,4 +7,6 @@ public class Schema
     public int level;
     public int exp;
     public int hp;
+    public int x;
+    public int y;
 }
