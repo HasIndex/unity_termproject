@@ -57,7 +57,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("OtherPlayer", new Vector3(x, -y));
                 break;
             case 1:
-                netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("Log", new Vector3(x, -y));
+                netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("FixedLog", new Vector3(x, -y));
                 break;
 
             case 2:
@@ -65,7 +65,7 @@ public class NetworkManager : Singleton<NetworkManager>
                 break;
 
             case 3:
-                netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("Ogre", new Vector3(x, -y));
+                netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("FixedOgre", new Vector3(x, -y));
                 break;
 
             case 4:

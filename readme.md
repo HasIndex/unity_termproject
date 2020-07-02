@@ -18,7 +18,7 @@
 
 
 # 개발에 사용한 외부 라이브러리들
-Tiled MapEditor.
+Tiled MapEditor, LitJSON
 
 
 # 사용한 에셋
