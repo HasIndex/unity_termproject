@@ -54,16 +54,26 @@ public class NetworkManager : Singleton<NetworkManager>
         switch (objectType)
         {
             case 0:
-                netMonoBehaviour = ObjectPooler.Instance.SpawnToNetMonoBehaviour("OtherPlayer", new Vector3(x, -y));
+                netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("OtherPlayer", new Vector3(x, -y));
                 break;
             case 1:
-                netMonoBehaviour = ObjectPooler.Instance.SpawnToNetMonoBehaviour("Ogre", new Vector3(x, -y));
+                netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("Log", new Vector3(x, -y));
                 break;
+
             case 2:
-                netMonoBehaviour = ObjectPooler.Instance.SpawnToNetMonoBehaviour("Log", new Vector3(x, -y));
+                netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("Log", new Vector3(x, -y));
                 break;
+
             case 3:
-                netMonoBehaviour = ObjectPooler.Instance.SpawnToNetMonoBehaviour("NPC2", new Vector3(x, -y));
+                netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("Ogre", new Vector3(x, -y));
+                break;
+
+            case 4:
+                netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("Ogre", new Vector3(x, -y));
+                break;
+
+            case 5:
+                netMonoBehaviour = ObjectPooler.Instance.SpawnUsingTag("NPC2", new Vector3(x, -y));
                 break;
             default:
                 Debug.Log($"obj type : {objectType}  x : {x} y {y}");

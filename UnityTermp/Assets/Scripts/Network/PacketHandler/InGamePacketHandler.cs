@@ -48,7 +48,7 @@ public class InGamePacketHandler : C2PacketHandler
             if (go != null)
             {
                 go.MoveToPositionUsingServerPostion(-movePayload.y, movePayload.x);
-                UnityEngine.Debug.Log($"id : {movePayload.id}, x : {movePayload.x}, y :{movePayload.y}");
+                //UnityEngine.Debug.Log($"id : {movePayload.id}, x : {movePayload.x}, y :{movePayload.y}");
             }
             else
             {
@@ -67,6 +67,7 @@ public class InGamePacketHandler : C2PacketHandler
 
         if (C2Client.Instance.serverID == enterPayload.id)
         {
+            MainPlayer.Instance.ResetWhenResapwn();
             C2Client.Instance.Player.MoveCharacterUsingServerPosition(-enterPayload.y, enterPayload.x);
         }
         else
@@ -96,6 +97,7 @@ public class InGamePacketHandler : C2PacketHandler
 
         // 스탯 업데이트 해줌.
         MainPlayer.Instance.SetStat(statChangePayload.level, statChangePayload.hp, statChangePayload.exp);
+        
     }
 
     //// 회원가입

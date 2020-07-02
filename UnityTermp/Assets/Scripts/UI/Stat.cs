@@ -36,7 +36,7 @@ public class Stat : MonoBehaviour
             }
 
             currentFill = currentValue / MaxValue;
-            statText.text = currentValue + " / " + MaxValue;
+            statText.text = $"{currentValue} / {MaxValue}";
         }
     }
 

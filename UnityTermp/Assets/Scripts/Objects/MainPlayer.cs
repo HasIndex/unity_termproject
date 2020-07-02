@@ -25,6 +25,8 @@ public class MainPlayer : Singleton<MainPlayer>
     private float             attackTimer = 1.0f;
     private float             movementTimer = 1.0f;
 
+    public float Timer { get; set; } = .04f;
+
     public int Level { get; set; } = 1;
     public int Exp { get; set; } = 0;
     public sbyte Direction { get; set; } = 0;
@@ -34,6 +36,8 @@ public class MainPlayer : Singleton<MainPlayer>
     [SerializeField] Stat exp;
     [SerializeField] Portrait portrait;
     [SerializeField] NameTag nameTag;
+    private int prevLevel;
+
     void Awake()
     {
         DontDestroyOnLoad(this);
@@ -69,7 +73,7 @@ public class MainPlayer : Singleton<MainPlayer>
     private void CheckInputForAttack()
     {
         attackTimer += Time.deltaTime;
-        if(attackTimer >= 1.0f)
+        if(attackTimer >= Timer)
         {
             if (currentState != PlayerState.Attack  && Input.GetKey(KeyCode.A) == true)
             {
@@ -92,10 +96,16 @@ public class MainPlayer : Singleton<MainPlayer>
         }
     }
 
+    internal void ResetWhenResapwn()
+    {
+        hp.CurrentValue = hp.MaxValue;
+        exp.CurrentValue = exp.CurrentValue / 2;
+    }
+
     private void CheckInputForMovement()
     {
         movementTimer += Time.deltaTime;
-        if (movementTimer >= 1.0f)
+        if (movementTimer >= Timer)
         {
             if (Input.GetKey(KeyCode.UpArrow) == true)
             {
@@ -203,18 +213,7 @@ public class MainPlayer : Singleton<MainPlayer>
         vector.x = x;
         vector.y = y;
 
-        //myRigidbody.position = vector;
         gameObject.transform.position = vector;
-    }
-
-    public void SetHP(int minHp, int maxHp)
-    {
-        hp.Initialize(minHp, maxHp);
-    }
-
-    public void SetLevel(int level)
-    {
-        //portrait.
     }
 
 
@@ -222,10 +221,10 @@ public class MainPlayer : Singleton<MainPlayer>
     {
         portrait.SetLevel(level);
 
-        int prevLevel = this.Level;
         if(prevLevel != level)
         {
-            this.exp.MaxValue = (int)(100.0 * Math.Pow(2.0, (double)C2Client.Instance.PlayerData.level - 1));
+            this.prevLevel = level;
+            this.exp.MaxValue = (int)(100.0 * Math.Pow(2.0, (double)level - 1));
             this.Level = level;
         }
 

@@ -63,7 +63,7 @@ public class ObjectPooler : Singleton<ObjectPooler>
     }
 
 
-    public NetMonoBehaviour SpawnToNetMonoBehaviour(string gameObjectName, Vector3 position)
+    public NetMonoBehaviour SpawnUsingTag(string gameObjectName, Vector3 position)
     {
         List<GameObject> goList;
         if (false == poolDict.TryGetValue(gameObjectName, out goList))
