@@ -18,27 +18,29 @@
 
 
 # 개발에 사용한 외부 라이브러리들
-Tiled MapEditor, LitJSON
+Tiled MapEditor, LitJSON, BetterStreamingAssets
 
 
 # 사용한 에셋
-MMORPG
+Zelda-like tilesets and sprites :
+https://opengameart.org/content/zelda-like-tilesets-and-sprites</br>
+Inscope의 유튜브에서 배포한 에셋을 사용하였습니다.</br>
+유투브 주소 : https://www.youtube.com/watch?v=oHFOkMffPDc&list=PLX-uZVK_0K_6JEecbu3Y-nVnANJznCzix
 
-# 자체 제작 에셋
-X
 
 # 핵심 기술
 -Network</br>
 -TCP/IP Socket Programming</br>
+-MultiThread programming</br>
 -2D Animation</br>
 -ObjectPool</br>
 -UI System</br>
 -Degisn Pattern ( Singleton, Strategy .. etc )</br>
 -Coroutine.</br>
--FSM.</br>
 -Database</br>
 -Stored procedure</br>
 -Handling JSON format</br>
+
 
 # 핵심 기술 중 수업에서 배우고 활용한 내용
 2D Animation</br>
@@ -52,8 +54,8 @@ Handling JSON format</br>
 
 # 게임 조작 방법
 
-방향키 이동</br>
-Space 공격</br>
+방향키  이동</br>
+A       공격</br>
 
 
 
