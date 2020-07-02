@@ -17,6 +17,13 @@ public class GameManager : Singleton<GameManager>
 
     void Awake()
     {
+        if (Config.Loaded == false)
+        {
+            BetterStreamingAssets.Initialize();
+            Config.Loaded = true;
+        }
+
+
         DontDestroyOnLoad(this);
 
         LoadConfigUsingJson();
@@ -24,7 +31,6 @@ public class GameManager : Singleton<GameManager>
 
     private void LoadConfigUsingJson()
     {
-        BetterStreamingAssets.Initialize();
 
         string[] paths = BetterStreamingAssets.GetFiles("\\", "*.txt", SearchOption.AllDirectories);
 

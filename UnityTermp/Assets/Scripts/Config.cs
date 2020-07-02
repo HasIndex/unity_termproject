@@ -29,4 +29,7 @@ public static class Config
     public static string GameVersion { get; set; } = "default";
     public static string AppVersion { get; set; } = "default";
 
+
+    public static bool Loaded { get; set; } = false;
+
 }

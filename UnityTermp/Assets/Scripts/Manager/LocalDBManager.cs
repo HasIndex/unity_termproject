@@ -31,6 +31,12 @@ public class LocalDBManager : Singleton<LocalDBManager>
 
     private void Awake()
     {
+        if (Config.Loaded == false)
+        {
+            BetterStreamingAssets.Initialize();
+            Config.Loaded = true;
+        }
+
         DontDestroyOnLoad(this);
 
         LoadLocalDB();
@@ -39,23 +45,25 @@ public class LocalDBManager : Singleton<LocalDBManager>
     public void Update()
     {
         timer += Time.deltaTime;
-        if(timer >= 5.0f && currentState == DBManagerState.Default)
+        if(timer >= 5.0f && C2Client.Instance.Nickname != "default")
         {
             LocalDBManager.Instance.SaveSchema(C2Client.Instance.Nickname);
-            //currentState = DBManagerState.Save;
-            timer = 0.0f;
 
-            Debug.Log("save");
+            timer = 0.0f;
         }
     }
 
     public void LoadLocalDB()
     {
-        TextAsset[] jsonFiles = Resources.LoadAll<TextAsset>("LocalDB");
-        
-        for(int n = 0; n < jsonFiles.Length; ++n)
+        string[] jsonFiles = BetterStreamingAssets.GetFiles("\\LocalDB", "*.txt", SearchOption.AllDirectories);
+        for (int n = 0; n < jsonFiles.Length; ++n)
         {
-            string dbText = jsonFiles[n].text;  // 스트링에 로드된 텍스트 에셋을 저장
+            byte[] byteContents = BetterStreamingAssets.ReadAllBytes(jsonFiles[n]);
+            string dbText = System.Text.Encoding.UTF8.GetString(byteContents);
+
+            //string dbText = jsonFiles[n];  // 스트링에 로드된 텍스트 에셋을 저장
+
+            Debug.Log(dbText);
 
             Schema schema = JsonMapper.ToObject<Schema>(dbText);  // 맵퍼를 이용해서, 텍스트를 매핑. 
 
@@ -129,7 +137,7 @@ public class LocalDBManager : Singleton<LocalDBManager>
 
     public bool InsertSchema(string nick, int level, int exp, int hp, int x, int y) // 없을시 생성.
     {
-        string path = $"{Application.dataPath}/Resources/LocalDB/{nick}.txt";
+        string path = $"{Application.streamingAssetsPath}/LocalDB/{nick}.txt";
 
         Schema schema;
         if (localDatabase.TryGetValue(nick, out schema) == false)  //  없는 경우.
@@ -150,7 +158,7 @@ public class LocalDBManager : Singleton<LocalDBManager>
 
     public bool DeleteSchema(string nick)
     {
-        string path = $"{Application.dataPath}/Resources/LocalDB/{nick}.txt";
+        string path = $"{Application.streamingAssetsPath}/LocalDB/{nick}.txt";
 
         if (File.Exists(path) == false)
         {
@@ -166,21 +174,18 @@ public class LocalDBManager : Singleton<LocalDBManager>
 
     public void SaveSchema(string nick)
     {
-        string path = $"{Application.dataPath}/Resources/LocalDB/{nick}.txt";
+        //BetterStreamingAssets.SetW
+        string path = $"{Application.streamingAssetsPath}/LocalDB/{nick}.txt";
 
         Schema schema;
         if (localDatabase.TryGetValue(nick, out schema) == false)  //  없는 경우.
         {
-            JsonData schameData = JsonMapper.ToJson(schema);
-
-            File.WriteAllText(path, schameData.ToString());
+            InsertSchema(C2Client.Instance.Nickname, 1, 0, 200, -1, -1);
         }
-        else
-        {
-            JsonData schameData = JsonMapper.ToJson(schema);
+        
+        JsonData schameData = JsonMapper.ToJson(schema);
 
-            File.WriteAllText(path, schameData.ToString());
-        }
+        File.WriteAllText(path, schameData.ToString());
     }
 
     public void SaveSchemaAsync(string nick)
