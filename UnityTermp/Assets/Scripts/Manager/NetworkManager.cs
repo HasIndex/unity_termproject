@@ -1,4 +1,5 @@
 ﻿using JetBrains.Annotations;
+using LitJson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,16 @@ using UnityEngine;
 public class NetworkManager : Singleton<NetworkManager>
 {
     private static NetworkManager       instance; // = new C2Network();
-    private static string               gameVersion = "for testing";
-    private static string               appVersion = "alpha";
-    public static string                serverIP { get; } = "127.0.0.1";
-    public static Int32                 serverPort { get; } = 21302;
+    private static string               serverIP = "127.0.0.1";
+
+    public static Int32                 serverPort = 21302;
     internal C2Client                   client;
-    public static Int64                 uniqueSessionID = -1;
+    public static Int64                 serverID = -1;
+
+
+    public static Int32 ServerPort { get { return serverPort; } }
+    public static string ServerIP { get{ return serverIP; } }
+
 
     private static Dictionary<Int64, NetMonoBehaviour> otherMap = new Dictionary<long, NetMonoBehaviour>();
 
@@ -23,19 +28,30 @@ public class NetworkManager : Singleton<NetworkManager>
     {
         DontDestroyOnLoad(this);
 
-        LoadConfigUsingJson();
-        
-        client = C2Client.Instance; //client = new C2Client(player);
-        //client.Player = C2Client.; //(player);
+        client = C2Client.Instance;
+
+        LoadServerConfigUsingJson();
+
+        C2Session.Instance.OnInit();
+    }
+
+    private void LoadServerConfigUsingJson()
+    {
+
+        //TextAsset jsonFile = Resources.Load("serverConfig") as TextAsset;
+
+        //string MapText = jsonFile.text;  // 스트링에 로드된 텍스트 에셋을 저장
+
+        //ServerConfig serverConfig = JsonMapper.ToObject<ServerConfig>(MapText);  // 맵퍼를 이용해서, 텍스트를 매핑. 
+
+        //Debug.Log($"{serverConfig.serverIP} : {serverConfig.serverPort}");
+
+        //Config.ServerIP = serverConfig.serverIP;
+        //Config.ServerPort = serverConfig.serverPort;
     }
 
     private void Update()
     {
-    }
-
-    private void LoadConfigUsingJson()
-    {
-        
     }
 
     public MainPlayer Player

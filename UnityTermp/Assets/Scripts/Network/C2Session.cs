@@ -52,17 +52,17 @@ public class C2Session : Singleton<C2Session>
     }
 
 
-    public C2Session(C2Client client)
-    {
-        OnInit();
-        this.client = client;
-    }
+    //public C2Session(C2Client client)
+    //{
+    //    OnInit();
+    //    this.client = client;
+    //}
 
 
     void Awake()
     {
         DontDestroyOnLoad(this);
-        OnInit();
+        //OnInit();
     }
 
     void Update()
@@ -125,7 +125,7 @@ public class C2Session : Singleton<C2Session>
 
     public void Connect()
     {
-        retAsync = socket.BeginConnect(NetworkManager.serverIP, NetworkManager.serverPort, new AsyncCallback(OnConnectComplete), this);
+        retAsync = socket.BeginConnect(Config.ServerIP, Config.ServerPort, new AsyncCallback(OnConnectComplete), this);
         
         this.state = SessionState.ConnectingToServer;
 

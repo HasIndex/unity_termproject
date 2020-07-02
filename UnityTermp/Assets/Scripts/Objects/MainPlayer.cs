@@ -73,7 +73,7 @@ public class MainPlayer : Singleton<MainPlayer>
     private void CheckInputForAttack()
     {
         attackTimer += Time.deltaTime;
-        if(attackTimer >= Timer)
+        if(attackTimer >= Config.ActionInterval)
         {
             if (currentState != PlayerState.Attack  && Input.GetKey(KeyCode.A) == true)
             {
@@ -105,7 +105,7 @@ public class MainPlayer : Singleton<MainPlayer>
     private void CheckInputForMovement()
     {
         movementTimer += Time.deltaTime;
-        if (movementTimer >= Timer)
+        if (movementTimer >= Config.ActionInterval)
         {
             if (Input.GetKey(KeyCode.UpArrow) == true)
             {
