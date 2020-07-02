@@ -51,7 +51,10 @@ public unsafe struct cs_packet_login
 {
     public PacketHeader header;
 
-    public fixed UInt16 name[(int)Protocol.MAX_ID_LEN];
+	public int level;
+	public int hp;
+	public int exp;
+	public fixed UInt16 name[(int)Protocol.MAX_ID_LEN];
 };
 
 [StructLayout(LayoutKind.Sequential, Pack = 1)]

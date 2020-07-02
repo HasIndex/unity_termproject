@@ -97,19 +97,19 @@ public class C2Client : Singleton<C2Client>
     /// </summary>
     public unsafe void SendLoginPacket()
     {
-        C2Session c2Session = C2Session.Instance;
+        //C2Session c2Session = C2Session.Instance;
 
-        cs_packet_login loginPacket;
-        loginPacket.header.type = PacketType.C2S_LOGIN;
-        loginPacket.header.size = (byte)Marshal.SizeOf(typeof(cs_packet_login));
+        //cs_packet_login loginPacket;
+        //loginPacket.header.type = PacketType.C2S_LOGIN;
+        //loginPacket.header.size = (byte)Marshal.SizeOf(typeof(cs_packet_login));
 
-        byte[] unicodeByte = System.Text.Encoding.Unicode.GetBytes(C2Client.Instance.Nickname);
         //byte[] unicodeByte = System.Text.Encoding.Unicode.GetBytes(C2Client.Instance.Nickname);
+        ////byte[] unicodeByte = System.Text.Encoding.Unicode.GetBytes(C2Client.Instance.Nickname);
 
-        int nicknameLength = unicodeByte.Length > (int)Protocol.MAX_ID_LEN ? (int)Protocol.MAX_ID_LEN : unicodeByte.Length;
-        Marshal.Copy(unicodeByte, 0, (IntPtr)loginPacket.name, nicknameLength);
+        //int nicknameLength = unicodeByte.Length > (int)Protocol.MAX_ID_LEN ? (int)Protocol.MAX_ID_LEN : unicodeByte.Length;
+        //Marshal.Copy(unicodeByte, 0, (IntPtr)loginPacket.name, nicknameLength);
 
-        c2Session.SendPacket(loginPacket);
+        //c2Session.SendPacket(loginPacket);
     }
 
     public unsafe void SendMovePacket(sbyte direction)

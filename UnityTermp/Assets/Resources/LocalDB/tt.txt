@@ -1,0 +1,1 @@
+{"nickname":"tt","level":1,"exp":2,"hp":3}
